@@ -7,6 +7,9 @@ export interface Status {
   length: number;
   weight: number;
   configuration: string;
+  minima: number;
+  coins: number;
+  data: string;
   memory: {
     ram: string;
     disk: string;
@@ -29,6 +32,12 @@ export interface Status {
     size: number;
     length: number;
     weight: number;
+    branches: number;
+    cascade: {
+      start: number;
+      length: number;
+      weight: string;
+    };
   };
   txpow: {
     mempool: number;

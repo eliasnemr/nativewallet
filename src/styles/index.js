@@ -19,14 +19,25 @@ export const bStyles = StyleSheet.create({
     boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
     backdropFilter: 'blur(50px)',
   },
+  listItemInner: {
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: 12,
+    paddingLeft: 0,
+    marginBottom: 14,
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
+    backdropFilter: 'blur(50px)',
+    marginLeft: 20,
+  },
   listTitle: {
     fontSize: 14,
     color: '#363A3F',
+    fontWeight: '700',
   },
   listDescription: {
     fontSize: 16,
     color: '#91919D',
     textAlign: 'left',
+    fontWeight: '100',
   },
   listIcon: {
     paddingRight: 0,
