@@ -43,6 +43,17 @@ export const bStyles = StyleSheet.create({
     paddingRight: 0,
     marginRight: 0,
   },
+  selectItem: {
+    borderColor: 'none',
+    borderWidth: 0,
+    borderRadius: 12,
+    marginBottom: 10,
+  },
+  selectOption: {
+    borderColor: 'none',
+    borderWidth: 0,
+    fontWeight: '300',
+  },
 });
 
 // box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);

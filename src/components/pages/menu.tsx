@@ -4,7 +4,18 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useFocusEffect} from '@react-navigation/native';
 import {Balance, Status} from '../../types';
 import {callAddress, callBalance, callStatus} from '../../api/rpc-commands';
-import {Button, List, Searchbar, Text} from 'react-native-paper';
+import {Select} from '@mobile-reality/react-native-select-pro';
+
+import {
+  Button,
+  List,
+  Searchbar,
+  Text,
+  TextInput,
+  Menu,
+  Divider,
+} from 'react-native-paper';
+
 import {TokenItem} from '../containers/tokens';
 import {bStyles} from '../../styles';
 import {Alert, Clipboard} from 'react-native';
@@ -15,7 +26,7 @@ const Drawer = createDrawerNavigator();
 const DrawerContent = ({navigation}: any) => {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Drawer content</Text>
+      <Text>Minima Wallet v0.0.1</Text>
       <Button
         onPress={() => {
           navigation.navigate('Balance');
@@ -34,6 +45,70 @@ const DrawerContent = ({navigation}: any) => {
         }}>
         Address
       </Button>
+      <Button
+        onPress={() => {
+          navigation.navigate('Send');
+        }}>
+        Send
+      </Button>
+    </View>
+  );
+};
+
+const SendScreen = () => {
+  const [address, setAddress] = useState('');
+  const [amount, setAmount] = useState('');
+  const [tokenid, setTokenid] = useState('');
+  const [balance, setBalance] = useState([]);
+
+  const handleSubmit = () => {
+    console.log('Sending coins..');
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      callBalance()
+        .then(data => {
+          // console.log(data);
+          setBalance(data.response);
+        })
+        .catch(err => {
+          console.log(`ERROR: ${err}`);
+        });
+      return () => {
+        // setBalance([]);
+      };
+    }, []),
+  );
+
+  const tokens = balance.map((t: Balance) => {
+    return {
+      value: t.tokenid,
+      label: typeof t.token === 'string' ? t.token : t.token.name,
+    };
+  });
+
+  return (
+    <View style={bStyles.view}>
+      <Select
+        selectControlStyle={bStyles.selectItem}
+        optionStyle={bStyles.selectOption}
+        placeholderText="Select a token"
+        onSelect={token => {
+          setTokenid(token.value);
+        }}
+        options={tokens}
+      />
+      <TextInput
+        style={bStyles.listItem}
+        label="Address"
+        value={address}
+        onChangeText={text => setAddress(text)}></TextInput>
+      <TextInput
+        style={bStyles.listItem}
+        label="Amount"
+        value={amount}
+        onChangeText={text => setAmount(text)}></TextInput>
     </View>
   );
 };
@@ -349,6 +424,8 @@ export const RootNavigator = () => {
       <Drawer.Screen name="Balance" component={BalanceScreen} />
       <Drawer.Screen name="Status" component={StatusScreen} />
       <Drawer.Screen name="Address" component={AddressScreen} />
+      <Drawer.Screen name="Send" component={SendScreen} />
+
       <Drawer.Screen name="TokenDetailScreen" component={TokenDetailScreen} />
     </Drawer.Navigator>
   );

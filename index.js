@@ -8,6 +8,7 @@ import React from 'react';
 import {Provider as PaperProvider} from 'react-native-paper';
 import {name as appName} from './app.json';
 import {NavigationContainer} from '@react-navigation/native';
+import {SelectProvider} from '@mobile-reality/react-native-select-pro';
 
 // Wrapping react-native-paper as a top level component.
 // If there is another provider (like redux)
@@ -18,9 +19,11 @@ import {NavigationContainer} from '@react-navigation/native';
 export default function Main() {
   return (
     <PaperProvider>
-      <NavigationContainer>
-        <App />
-      </NavigationContainer>
+      <SelectProvider>
+        <NavigationContainer>
+          <App />
+        </NavigationContainer>
+      </SelectProvider>
     </PaperProvider>
   );
 }
