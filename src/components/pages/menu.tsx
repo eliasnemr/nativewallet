@@ -1,10 +1,16 @@
 import React, {useState} from 'react';
-import {View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useFocusEffect} from '@react-navigation/native';
 import {Balance, Status} from '../../types';
-import {callAddress, callBalance, callStatus} from '../../api/rpc-commands';
-import {Select} from '@mobile-reality/react-native-select-pro';
+import {
+  callAddress,
+  callBalance,
+  callStatus,
+  send,
+} from '../../api/rpc-commands';
+import {FormBuilder} from 'react-native-paper-form-builder';
+import {useForm} from 'react-hook-form';
 
 import {
   Button,
@@ -56,14 +62,19 @@ const DrawerContent = ({navigation}: any) => {
 };
 
 const SendScreen = () => {
-  const [address, setAddress] = useState('');
-  const [amount, setAmount] = useState('');
-  const [tokenid, setTokenid] = useState('');
+  // const [address, setAddress] = useState('');
+  // const [amount, setAmount] = useState('');
+  // const [tokenid, setTokenid] = useState('');
   const [balance, setBalance] = useState([]);
 
-  const handleSubmit = () => {
-    console.log('Sending coins..');
-  };
+  const {control, setFocus, handleSubmit, reset} = useForm({
+    defaultValues: {
+      tokenid: '',
+      address: '',
+      amount: '',
+    },
+    mode: 'onChange',
+  });
 
   useFocusEffect(
     React.useCallback(() => {
@@ -89,7 +100,84 @@ const SendScreen = () => {
   });
 
   return (
-    <View style={bStyles.view}>
+    <View style={styles.containerStyle}>
+      <ScrollView contentContainerStyle={styles.scrollViewStyle}>
+        <FormBuilder
+          control={control}
+          setFocus={setFocus}
+          formConfigArray={[
+            {
+              type: 'select',
+              name: 'tokenid',
+
+              rules: {
+                required: {
+                  value: true,
+                  message: 'A token must be selected',
+                },
+              },
+              textInputProps: {
+                label: 'Token',
+              },
+              options: tokens,
+            },
+            {
+              type: 'text',
+              name: 'address',
+
+              rules: {
+                required: {
+                  value: true,
+                  message: 'Address is required',
+                },
+              },
+              textInputProps: {
+                label: 'Address',
+              },
+            },
+            {
+              type: 'text',
+              name: 'amount',
+              rules: {
+                required: {
+                  value: true,
+                  message: 'Password is required',
+                },
+              },
+              textInputProps: {
+                label: 'Amount',
+              },
+            },
+          ]}
+        />
+        <Button
+          mode={'contained'}
+          onPress={handleSubmit((data: any) => {
+            console.log('form data', data);
+
+            send(data)
+              .then(res => {
+                if (res.status) {
+                  Alert.alert('Transaction successful!');
+
+                  reset(); // reset form?
+                } else {
+                  throw new Error(res.message);
+                }
+                console.log(res);
+              })
+              .catch(err => {
+                Alert.alert(`${err}`);
+              });
+          })}>
+          Send
+        </Button>
+      </ScrollView>
+    </View>
+  );
+  /**
+   * Old Form
+   * <View style={bStyles.view}>
       <Select
         selectControlStyle={bStyles.selectItem}
         optionStyle={bStyles.selectOption}
@@ -109,9 +197,27 @@ const SendScreen = () => {
         label="Amount"
         value={amount}
         onChangeText={text => setAmount(text)}></TextInput>
+
+      <Button onPress={() => handleSubmit()}>Send</Button>
     </View>
-  );
+   */
 };
+
+const styles = StyleSheet.create({
+  containerStyle: {
+    flex: 1,
+  },
+  scrollViewStyle: {
+    flex: 1,
+    padding: 15,
+    justifyContent: 'flex-start',
+  },
+  headingStyle: {
+    fontSize: 30,
+    textAlign: 'center',
+    marginBottom: 40,
+  },
+});
 
 const AddressScreen = () => {
   const [address, setAddress] = useState('');
