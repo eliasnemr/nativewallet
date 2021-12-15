@@ -17,7 +17,7 @@ export const callAddress = () => {
 };
 
 // send ${address} ${amount} ${tokenid}
-export const send = (data: any) => {
+export const send = data => {
   return retryPromise(callSendSingle(data), MAX_RETRIES);
 };
 
@@ -25,7 +25,7 @@ export const send = (data: any) => {
 
 const MAX_RETRIES = 2;
 
-const callSendSingle = (data: any) => () => {
+const callSendSingle = data => () => {
   const url = `${RPCHOST}${SEND}+address:${data.address}+amount:${data.amount}+tokenid:${data.tokenid}`;
   return fetch(url, {
     method: 'GET',
