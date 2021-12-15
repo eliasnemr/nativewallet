@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/nativewallet.iml" filepath="$PROJECT_DIR$/.idea/modules/nativewallet.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/nativewallet.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/nativewallet.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-242844316/nativewallet.react-native-gesture-handler.iml" filepath="$PROJECT_DIR$/.idea/modules/-242844316/nativewallet.react-native-gesture-handler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-558476744/nativewallet.react-native-reanimated.iml" filepath="$PROJECT_DIR$/.idea/modules/-558476744/nativewallet.react-native-reanimated.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-793785139/nativewallet.react-native-safe-area-context.iml" filepath="$PROJECT_DIR$/.idea/modules/-793785139/nativewallet.react-native-safe-area-context.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1162782427/nativewallet.react-native-screens.iml" filepath="$PROJECT_DIR$/.idea/modules/-1162782427/nativewallet.react-native-screens.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/-1427950350/nativewallet.react-native-vector-icons.iml" filepath="$PROJECT_DIR$/.idea/modules/-1427950350/nativewallet.react-native-vector-icons.iml" />
+    </modules>
+  </component>
+</project>

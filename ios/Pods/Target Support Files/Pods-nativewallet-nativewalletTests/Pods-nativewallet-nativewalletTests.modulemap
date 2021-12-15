@@ -1,0 +1,6 @@
+module Pods_nativewallet_nativewalletTests {
+  umbrella header "Pods-nativewallet-nativewalletTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

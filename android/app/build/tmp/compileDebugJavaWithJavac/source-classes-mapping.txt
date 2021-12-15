@@ -1,0 +1,14 @@
+com/nativewallet/ReactNativeFlipper.java
+ com.nativewallet.ReactNativeFlipper
+ com.nativewallet.ReactNativeFlipper$1
+ com.nativewallet.ReactNativeFlipper$2
+ com.nativewallet.ReactNativeFlipper$2$1
+com/nativewallet/MainApplication.java
+ com.nativewallet.MainApplication
+ com.nativewallet.MainApplication$1
+com/nativewallet/MainActivity.java
+ com.nativewallet.MainActivity
+com/nativewallet/BuildConfig.java
+ com.nativewallet.BuildConfig
+com/facebook/react/PackageList.java
+ com.facebook.react.PackageList
