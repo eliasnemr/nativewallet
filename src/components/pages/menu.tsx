@@ -3,11 +3,11 @@ import {View} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useFocusEffect} from '@react-navigation/native';
 import {Balance, Status} from '../../types';
-import {callBalance, callStatus} from '../../api/rpc-commands';
+import {callAddress, callBalance, callStatus} from '../../api/rpc-commands';
 import {Button, List, Searchbar, Text} from 'react-native-paper';
 import {TokenItem} from '../containers/tokens';
 import {bStyles} from '../../styles';
-import {Alert} from 'react-native';
+import {Alert, Clipboard} from 'react-native';
 import {StatusRow} from '../containers/statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
 const Drawer = createDrawerNavigator();
@@ -20,14 +20,83 @@ const DrawerContent = ({navigation}: any) => {
         onPress={() => {
           navigation.navigate('Balance');
         }}>
-        Navigate To Home
+        Home
       </Button>
       <Button
         onPress={() => {
           navigation.navigate('Status');
         }}>
-        Navigate To Status
+        Status
       </Button>
+      <Button
+        onPress={() => {
+          navigation.navigate('Address');
+        }}>
+        Address
+      </Button>
+    </View>
+  );
+};
+
+const AddressScreen = () => {
+  const [address, setAddress] = useState('');
+  const [copyText, setCopyText] = useState('Copy');
+
+  useFocusEffect(
+    React.useCallback(() => {
+      callAddress()
+        .then(data => {
+          if (data && data.response) {
+            setAddress(data.response.address);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+
+      return () => {
+        // Do something when the screen is unfocused
+        // Useful for cleanup functions
+      };
+    }, []),
+  );
+
+  const copyToClipboard = data => {
+    try {
+      setCopyText('Copied');
+      Clipboard.setString(data);
+      setTimeout(() => {
+        setCopyText('Copy');
+      }, 1000);
+    } catch (err) {
+      setCopyText('Failed');
+      setTimeout(() => {
+        setCopyText('Copy');
+      }, 1000);
+      Alert.alert(err);
+    }
+  };
+
+  return (
+    <View style={bStyles.view}>
+      <List.Section style={bStyles.listItem}>
+        <List.Item
+          title={address ? address : 'No address available'}
+          description={'Use this address to receive coins.'}
+          titleStyle={bStyles.listTitle}
+          titleEllipsizeMode="middle"
+          right={props => (
+            <Button
+              uppercase={false}
+              accessibilityLabel="Copy to clipboard"
+              compact={true}
+              onPress={() => {
+                copyToClipboard(address);
+              }}>
+              {copyText}
+            </Button>
+          )}></List.Item>
+      </List.Section>
     </View>
   );
 };
@@ -279,6 +348,7 @@ export const RootNavigator = () => {
     <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen name="Balance" component={BalanceScreen} />
       <Drawer.Screen name="Status" component={StatusScreen} />
+      <Drawer.Screen name="Address" component={AddressScreen} />
       <Drawer.Screen name="TokenDetailScreen" component={TokenDetailScreen} />
     </Drawer.Navigator>
   );
