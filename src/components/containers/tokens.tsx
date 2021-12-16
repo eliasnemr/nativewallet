@@ -39,9 +39,9 @@ export const TokenItem = props => {
       descriptionNumberOfLines={1}
       titleEllipsizeMode="tail"
       descriptionEllipsizeMode="tail"
-      onPress={() => {
-        props.navigation.navigate('TokenDetailScreen', tokenClicked);
-      }}
+      // onPress={() => {
+      //   props.navigation.navigate('TokenDetailScreen', tokenClicked);
+      // }}
       title={isToken(props.token)}
       description={props.token.confirmed}
       left={props => (
