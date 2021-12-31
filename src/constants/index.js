@@ -3,6 +3,7 @@ export const BALANCE = 'balance';
 export const HELP = 'help';
 export const SEND = 'send';
 export const ADDRESS = 'newaddress';
+export const TOKENCREATE = 'tokencreate';
 
 import {Platform} from 'react-native';
 

@@ -23,6 +23,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true" >
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
+        <receiver
+            android:name="com.nativewallet.MyBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.minima.newblock" >
+                </action>
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name="com.nativewallet.MainActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"

@@ -1,7 +1,10 @@
 package com.nativewallet;
 
 import com.facebook.react.ReactActivity;
+
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 
 public class MainActivity extends ReactActivity {
 
@@ -16,6 +19,12 @@ public class MainActivity extends ReactActivity {
   
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+
     super.onCreate(null);
+    Log.i("Broadcastreceiver: ", "creating intent for broadcast receiver");
+    IntentFilter intentFilter = new IntentFilter("com.minima.newblock");
+    MyBroadcastReceiver objReceiver = new MyBroadcastReceiver();
+    registerReceiver(objReceiver, intentFilter);
+
   }
 }
