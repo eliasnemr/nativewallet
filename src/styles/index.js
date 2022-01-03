@@ -56,5 +56,25 @@ export const bStyles = StyleSheet.create({
   },
 });
 
+export const tokenStyle = StyleSheet.create({
+  view: {
+    borderRadius: 12,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    margin: 14,
+    boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
+    backdropFilter: 'blur',
+  },
+  tokenTitle: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  tokenDescription: {
+    textAlign: 'left',
+    fontSize: 16,
+    lineHeight: 24,
+    fontWeight: 400,
+  },
+});
+
 // box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 // backdrop-filter: blur(50px);

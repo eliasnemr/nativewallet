@@ -18,18 +18,15 @@ import {
   List,
   Searchbar,
   Text,
-  TextInput,
-  Menu,
-  Divider,
   Card,
-  IconButton,
-  Avatar,
   Title,
   Paragraph,
+  Avatar,
+  Divider,
 } from 'react-native-paper';
 
 import {TokenItem} from '../containers/tokens';
-import {bStyles} from '../../styles';
+import {bStyles, tokenStyle} from '../../styles';
 import {Alert, Clipboard} from 'react-native';
 import {StatusRow} from '../containers/statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -580,26 +577,50 @@ const StatusScreen = () => {
 };
 
 const TokenDetailScreen = ({route}) => {
-  const {tokenName, icon, description} = route.params;
-  function hasDescription(description: string) {
-    if (description && description.length > 0) {
-      return (
-        <Card.Content>
-          <Title>Description</Title>
-          <Paragraph>{description}</Paragraph>
-        </Card.Content>
-      );
-    }
+  const tokenSelectedDetails = route.params;
+  function isToken(token) {
+    return token.token &&
+      typeof token.token === 'object' &&
+      typeof token.token.name === 'string'
+      ? token.token.name
+      : token.token;
   }
   return (
-    <View>
-      <Card.Cover
+    <View style={tokenStyle.view}>
+      <Avatar.Image
+        style={{
+          display: 'flex',
+          alignSelf: 'center',
+          margin: 14,
+        }}
+        size={112}
         source={{
-          uri: icon && icon !== 'folder' ? icon : 'https://picsum.photos/700',
-        }}></Card.Cover>
-      <Card.Title title={tokenName}></Card.Title>
+          uri: tokenSelectedDetails.token.icon
+            ? tokenSelectedDetails.token.icon
+            : 'https://minima.global/images/small-logo.svg',
+        }}
+      />
 
-      {hasDescription(description)}
+      <Card.Title
+        title={isToken(tokenSelectedDetails)}
+        titleStyle={tokenStyle.tokenTitle}></Card.Title>
+
+      <View style={{marginLeft: 14, marginRight: 14}}>
+        <Divider />
+      </View>
+
+      <Card.Content>
+        {tokenSelectedDetails.token.description ? (
+          <Paragraph numberOfLines={5} style={{textAlign: 'left'}}>
+            {tokenSelectedDetails.token.description}
+          </Paragraph>
+        ) : null}
+        {tokenSelectedDetails.tokenid === '0x00' ? (
+          <Paragraph style={{textAlign: 'left'}}>
+            Minima's Official Token
+          </Paragraph>
+        ) : null}
+      </Card.Content>
     </View>
   );
 };
