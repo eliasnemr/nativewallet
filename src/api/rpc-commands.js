@@ -1,4 +1,12 @@
-import {STATUS, BALANCE, RPCHOST, SEND, HELP, ADDRESS} from '../constants';
+import {
+  STATUS,
+  BALANCE,
+  RPCHOST,
+  SEND,
+  HELP,
+  ADDRESS,
+  TOKENCREATE,
+} from '../constants';
 
 export const callStatus = () => {
   return retryPromise(callStatusSingle, MAX_RETRIES);
@@ -20,10 +28,26 @@ export const callAddress = () => {
 export const send = (data: any) => {
   return retryPromise(callSendSingle(data), MAX_RETRIES);
 };
+export const tokencreate = (data: any) => {
+  return retryPromise(callTokenSingle(data), MAX_RETRIES);
+};
 
 ///// private functions //////
 
 const MAX_RETRIES = 2;
+
+const callTokenSingle = (data: any) => () => {
+  const url = `${RPCHOST}${TOKENCREATE}+name:${JSON.stringify(
+    data.name,
+  )}+amount:${data.amount}`;
+  return fetch(url, {
+    method: 'GET',
+    mode: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(result => result.json());
+};
 
 const callSendSingle = (data: any) => () => {
   const url = `${RPCHOST}${SEND}+address:${data.address}+amount:${data.amount}+tokenid:${data.tokenid}`;

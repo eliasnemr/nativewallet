@@ -4,7 +4,7 @@
     <facet type="android-gradle" name="Android-Gradle">
       <configuration>
         <option name="GRADLE_PROJECT_PATH" value=":app" />
-        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" />
+        <option name="LAST_SUCCESSFUL_SYNC_AGP_VERSION" value="4.2.2" />
         <option name="LAST_KNOWN_AGP_VERSION" value="4.2.2" />
       </configuration>
     </facet>
@@ -133,6 +133,7 @@
     <orderEntry type="library" name="Gradle: artifacts:react-native-reanimated:unspecified" level="project" />
     <orderEntry type="module" module-name="nativewallet.react-native-screens" />
     <orderEntry type="module" module-name="nativewallet.react-native-safe-area-context" />
+    <orderEntry type="module" module-name="nativewallet.react-native-community_clipboard" />
     <orderEntry type="module" module-name="nativewallet.react-native-gesture-handler" />
     <orderEntry type="module" module-name="nativewallet.react-native-vector-icons" />
   </component>

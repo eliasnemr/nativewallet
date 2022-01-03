@@ -7,6 +7,7 @@ import {
   callAddress,
   callBalance,
   callStatus,
+  tokencreate,
   send,
 } from '../../api/rpc-commands';
 import {FormBuilder} from 'react-native-paper-form-builder';
@@ -20,6 +21,11 @@ import {
   TextInput,
   Menu,
   Divider,
+  Card,
+  IconButton,
+  Avatar,
+  Title,
+  Paragraph,
 } from 'react-native-paper';
 
 import {TokenItem} from '../containers/tokens';
@@ -57,6 +63,121 @@ const DrawerContent = ({navigation}: any) => {
         }}>
         Send
       </Button>
+      <Button
+        onPress={() => {
+          navigation.navigate('Token');
+        }}>
+        Token
+      </Button>
+    </View>
+  );
+};
+
+const CreateTokenScreen = () => {
+  const {control, setFocus, handleSubmit, reset} = useForm({
+    defaultValues: {
+      name: '',
+      amount: '',
+      description: '',
+      icon: '',
+    },
+    mode: 'onChange',
+  });
+
+  return (
+    <View style={styles.containerStyle}>
+      <ScrollView contentContainerStyle={styles.scrollViewStyle}>
+        <FormBuilder
+          control={control}
+          setFocus={setFocus}
+          formConfigArray={[
+            {
+              type: 'text',
+              name: 'name',
+
+              rules: {
+                required: {
+                  value: true,
+                  message: 'A token name is required.',
+                },
+              },
+              textInputProps: {
+                label: 'Name',
+              },
+            },
+            {
+              type: 'text',
+              name: 'amount',
+
+              rules: {
+                required: {
+                  value: true,
+                  message: 'Amount is required',
+                },
+              },
+              textInputProps: {
+                label: 'Amount',
+              },
+            },
+            {
+              type: 'text',
+              name: 'description',
+              rules: {
+                required: {
+                  value: false,
+                  message: '',
+                },
+              },
+              textInputProps: {
+                label: 'Description',
+              },
+            },
+            {
+              type: 'text',
+              name: 'icon',
+              rules: {
+                required: {
+                  value: false,
+                  message: '',
+                },
+              },
+              textInputProps: {
+                label: 'Icon',
+              },
+            },
+          ]}
+        />
+        <Button
+          mode={'contained'}
+          onPress={handleSubmit((data: any) => {
+            const customToken = {
+              name: {
+                name: data.name,
+                description: data.description,
+                icon: data.icon,
+              },
+              amount: data.amount,
+            };
+
+            tokencreate(customToken)
+              .then(res => {
+                if (res.status) {
+                  Alert.alert('Transaction successful!');
+
+                  reset(); // reset form?
+                } else {
+                  throw new Error(res.message);
+                }
+                console.log(res);
+              })
+              .catch(err => {
+                Alert.alert(`${err}`);
+              });
+            console.log('form data', data);
+          })}>
+          Create Token
+        </Button>
+      </ScrollView>
     </View>
   );
 };
@@ -458,13 +579,27 @@ const StatusScreen = () => {
   );
 };
 
-const TokenDetailScreen = ({route, navigation}) => {
+const TokenDetailScreen = ({route}) => {
   const {tokenName, icon, description} = route.params;
+  function hasDescription(description: string) {
+    if (description && description.length > 0) {
+      return (
+        <Card.Content>
+          <Title>Description</Title>
+          <Paragraph>{description}</Paragraph>
+        </Card.Content>
+      );
+    }
+  }
   return (
     <View>
-      <Text>Token name: {tokenName}</Text>
-      <Text>Token description: {description}</Text>
-      <Text>Token icon: {icon}</Text>
+      <Card.Cover
+        source={{
+          uri: icon && icon !== 'folder' ? icon : 'https://picsum.photos/700',
+        }}></Card.Cover>
+      <Card.Title title={tokenName}></Card.Title>
+
+      {hasDescription(description)}
     </View>
   );
 };
@@ -531,6 +666,7 @@ export const RootNavigator = () => {
       <Drawer.Screen name="Status" component={StatusScreen} />
       <Drawer.Screen name="Address" component={AddressScreen} />
       <Drawer.Screen name="Send" component={SendScreen} />
+      <Drawer.Screen name="Token" component={CreateTokenScreen} />
 
       <Drawer.Screen name="TokenDetailScreen" component={TokenDetailScreen} />
     </Drawer.Navigator>

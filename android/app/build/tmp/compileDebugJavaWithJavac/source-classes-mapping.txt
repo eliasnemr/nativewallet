@@ -1,3 +1,5 @@
+com/nativewallet/MyBroadcastReceiver.java
+ com.nativewallet.MyBroadcastReceiver
 com/nativewallet/ReactNativeFlipper.java
  com.nativewallet.ReactNativeFlipper
  com.nativewallet.ReactNativeFlipper$1

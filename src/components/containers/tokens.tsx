@@ -12,7 +12,7 @@ function isToken(token) {
 function hasDescription(token) {
   return token.token &&
     typeof token.token === 'object' &&
-    typeof token.token.name === 'string'
+    typeof token.token.description === 'string'
     ? token.token.description
     : '';
 }
@@ -30,6 +30,7 @@ export const TokenItem = props => {
     description: hasDescription(props.token),
     icon: hasIcon(props.token),
   };
+  console.log(props);
   return (
     <List.Item
       style={bStyles.listItem}
@@ -39,9 +40,9 @@ export const TokenItem = props => {
       descriptionNumberOfLines={1}
       titleEllipsizeMode="tail"
       descriptionEllipsizeMode="tail"
-      // onPress={() => {
-      //   props.navigation.navigate('TokenDetailScreen', tokenClicked);
-      // }}
+      onPress={() => {
+        props.navigation.navigate('TokenDetailScreen', tokenClicked);
+      }}
       title={isToken(props.token)}
       description={props.token.confirmed}
       left={props => (
