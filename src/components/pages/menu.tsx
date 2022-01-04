@@ -578,6 +578,8 @@ const StatusScreen = () => {
 
 const TokenDetailScreen = ({route}) => {
   const tokenSelectedDetails = route.params;
+  const [copyIcon, setCopyIcon] = useState('clipboard');
+
   function isToken(token) {
     return token.token &&
       typeof token.token === 'object' &&
@@ -585,43 +587,121 @@ const TokenDetailScreen = ({route}) => {
       ? token.token.name
       : token.token;
   }
+  const copyToClipboard = data => {
+    try {
+      setCopyIcon('check-outline');
+      Clipboard.setString(data);
+      setTimeout(() => {
+        setCopyIcon('clipboard');
+      }, 1000);
+    } catch (err) {
+      setTimeout(() => {
+        setCopyIcon('clipboard');
+      }, 1000);
+      Alert.alert(err);
+    }
+  };
+
   return (
-    <View style={tokenStyle.view}>
-      <Avatar.Image
-        style={{
-          display: 'flex',
-          alignSelf: 'center',
-          margin: 14,
-        }}
-        size={112}
-        source={{
-          uri: tokenSelectedDetails.token.icon
-            ? tokenSelectedDetails.token.icon
-            : 'https://minima.global/images/small-logo.svg',
-        }}
-      />
+    <ScrollView>
+      <View style={tokenStyle.view}>
+        <Avatar.Image
+          style={{
+            display: 'flex',
+            alignSelf: 'center',
+            margin: 14,
+          }}
+          size={112}
+          source={{
+            uri: tokenSelectedDetails.token.icon
+              ? tokenSelectedDetails.token.icon
+              : 'https://minima.global/images/small-logo.svg',
+          }}
+        />
 
-      <Card.Title
-        title={isToken(tokenSelectedDetails)}
-        titleStyle={tokenStyle.tokenTitle}></Card.Title>
+        <Card.Title
+          title={isToken(tokenSelectedDetails)}
+          titleStyle={tokenStyle.tokenTitle}></Card.Title>
 
-      <View style={{marginLeft: 14, marginRight: 14}}>
-        <Divider />
+        <View style={{marginLeft: 14, marginRight: 14}}>
+          <Divider />
+        </View>
+
+        <Card.Content>
+          {tokenSelectedDetails.token.description ? (
+            <Paragraph numberOfLines={5} style={{textAlign: 'left'}}>
+              {tokenSelectedDetails.token.description}
+            </Paragraph>
+          ) : null}
+          {tokenSelectedDetails.tokenid === '0x00' ? (
+            <Paragraph style={{textAlign: 'left'}}>
+              Minima's Official Token
+            </Paragraph>
+          ) : null}
+        </Card.Content>
       </View>
 
-      <Card.Content>
-        {tokenSelectedDetails.token.description ? (
-          <Paragraph numberOfLines={5} style={{textAlign: 'left'}}>
-            {tokenSelectedDetails.token.description}
-          </Paragraph>
-        ) : null}
-        {tokenSelectedDetails.tokenid === '0x00' ? (
-          <Paragraph style={{textAlign: 'left'}}>
-            Minima's Official Token
-          </Paragraph>
-        ) : null}
-      </Card.Content>
-    </View>
+      <View style={tokenStyle.view}>
+        <List.Item
+          title="Name"
+          description={isToken(tokenSelectedDetails)}
+          descriptionStyle={tokenStyle.listDescription}
+          titleStyle={tokenStyle.listTitle}
+          descriptionNumberOfLines={2}
+          descriptionEllipsizeMode="tail"></List.Item>
+        <List.Item
+          title="Token ID"
+          description={() => {
+            return (
+              <View
+                style={[
+                  tokenStyle.listDescriptionCopy,
+                  tokenStyle.listDescription,
+                ]}>
+                <Text style={tokenStyle.listDescriptionCopyText}>
+                  {tokenSelectedDetails.tokenid}
+                </Text>
+
+                <Button
+                  onPress={() => {
+                    copyToClipboard(tokenSelectedDetails.tokenid);
+                  }}
+                  color="#fff"
+                  icon={copyIcon}
+                  style={tokenStyle.listDescriptionCopyBtn}></Button>
+              </View>
+            );
+          }}
+          descriptionStyle={tokenStyle.listDescription}
+          titleStyle={tokenStyle.listTitle}
+          descriptionNumberOfLines={2}
+          descriptionEllipsizeMode="middle"></List.Item>
+        <List.Item
+          title="Total Amount Minted"
+          description={tokenSelectedDetails.total}
+          descriptionStyle={tokenStyle.listDescription}
+          titleStyle={tokenStyle.listTitle}
+          descriptionNumberOfLines={2}
+          descriptionEllipsizeMode="middle"></List.Item>
+      </View>
+
+      <View style={tokenStyle.view}>
+        <List.Item
+          title="Confirmed Amount"
+          description={tokenSelectedDetails.confirmed}
+          descriptionStyle={tokenStyle.listDescription}
+          titleStyle={tokenStyle.listTitle}
+          descriptionNumberOfLines={2}
+          descriptionEllipsizeMode="tail"></List.Item>
+        <List.Item
+          title="Unconfirmed Amount"
+          description={tokenSelectedDetails.unconfirmed}
+          descriptionStyle={tokenStyle.listDescription}
+          titleStyle={tokenStyle.listTitle}
+          descriptionNumberOfLines={2}
+          descriptionEllipsizeMode="tail"></List.Item>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -646,37 +726,39 @@ const BalanceScreen = props => {
   );
 
   return (
-    <View style={bStyles.view}>
-      <Searchbar
-        style={bStyles.searchbar}
-        inputStyle={bStyles.searchbar.inputStyle}
-        placeholder="Search Token"
-        onChangeText={onChangeSearch}
-        value={searchQuery}></Searchbar>
+    <ScrollView>
+      <View style={bStyles.view}>
+        <Searchbar
+          style={bStyles.searchbar}
+          inputStyle={bStyles.searchbar.inputStyle}
+          placeholder="Search Token"
+          onChangeText={onChangeSearch}
+          value={searchQuery}></Searchbar>
 
-      {balance ? (
-        balance
-          .filter(token =>
-            searchQuery.length > 0
-              ? token.tokenid.includes(searchQuery) ||
-                (token.token &&
-                  typeof token.token === 'string' &&
-                  token.token.includes(searchQuery)) ||
-                (token.token.name &&
-                  typeof token.token.name === 'string' &&
-                  token.token.name.includes(searchQuery))
-              : true,
-          )
-          .map(t => (
-            <TokenItem
-              navigation={props.navigation}
-              key={t.tokenid}
-              token={t}></TokenItem>
-          ))
-      ) : (
-        <Text>No Balance available</Text>
-      )}
-    </View>
+        {balance ? (
+          balance
+            .filter(token =>
+              searchQuery.length > 0
+                ? token.tokenid.includes(searchQuery) ||
+                  (token.token &&
+                    typeof token.token === 'string' &&
+                    token.token.includes(searchQuery)) ||
+                  (token.token.name &&
+                    typeof token.token.name === 'string' &&
+                    token.token.name.includes(searchQuery))
+                : true,
+            )
+            .map(t => (
+              <TokenItem
+                navigation={props.navigation}
+                key={t.tokenid}
+                token={t}></TokenItem>
+            ))
+        ) : (
+          <Text>No Balance available</Text>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
