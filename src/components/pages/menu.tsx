@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useFocusEffect} from '@react-navigation/native';
 import {Balance, Status} from '../../types';
@@ -27,9 +27,10 @@ import {
 import {TokenItem} from '../containers/tokens';
 import {bStyles, tokenStyle} from '../../styles';
 import {Alert} from 'react-native';
-import Clipboard from '@react-native-clipboard/clipboard';
 import {StatusRow} from '../containers/statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {MinimaIcon} from '../../assets/Minima';
 const Drawer = createDrawerNavigator();
 
 const DrawerContent = ({navigation}: any) => {
@@ -605,19 +606,33 @@ const TokenDetailScreen = ({route}) => {
   return (
     <ScrollView>
       <View style={tokenStyle.view}>
-        <Avatar.Image
-          style={{
-            display: 'flex',
-            alignSelf: 'center',
-            margin: 14,
-          }}
-          size={112}
-          source={{
-            uri: tokenSelectedDetails.token.icon
-              ? tokenSelectedDetails.token.icon
-              : 'https://minima.global/images/small-logo.svg',
-          }}
-        />
+        {tokenSelectedDetails.tokenid === '0x00' ? (
+          <Image
+            style={{
+              padding: 0,
+              height: 114,
+              width: 125,
+              alignSelf: 'center',
+              margin: 14,
+              marginBottom: 0,
+            }}
+            source={require('../../assets/icon.png')}
+          />
+        ) : (
+          <Avatar.Image
+            style={{
+              alignSelf: 'center',
+              margin: 14,
+              marginBottom: 0,
+            }}
+            size={112}
+            source={{
+              uri: tokenSelectedDetails.token.icon
+                ? tokenSelectedDetails.token.icon
+                : '../../assets/icon.png',
+            }}
+          />
+        )}
 
         <Card.Title
           title={isToken(tokenSelectedDetails)}
@@ -634,7 +649,7 @@ const TokenDetailScreen = ({route}) => {
             </Paragraph>
           ) : null}
           {tokenSelectedDetails.tokenid === '0x00' ? (
-            <Paragraph style={{textAlign: 'left'}}>
+            <Paragraph style={{textAlign: 'center'}}>
               Minima's Official Token
             </Paragraph>
           ) : null}
