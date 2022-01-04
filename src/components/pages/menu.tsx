@@ -30,13 +30,12 @@ import {Alert} from 'react-native';
 import {StatusRow} from '../containers/statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
 import Clipboard from '@react-native-clipboard/clipboard';
-import {MinimaIcon} from '../../assets/Minima';
 const Drawer = createDrawerNavigator();
 
 const DrawerContent = ({navigation}: any) => {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Minima Wallet v0.0.1</Text>
+      <Text>Minima Wallet v0.1.0</Text>
       <Button
         onPress={() => {
           navigation.navigate('Balance');
