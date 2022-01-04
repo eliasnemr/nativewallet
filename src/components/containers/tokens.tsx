@@ -24,13 +24,13 @@ function hasIcon(token) {
     : 'folder';
 }
 
-export const TokenItem = props => {
+export const TokenItem = (props: any) => {
+  //console.log(props);
   const tokenClicked = {
     tokenName: isToken(props.token),
     description: hasDescription(props.token),
     icon: hasIcon(props.token),
   };
-  console.log(props);
   return (
     <List.Item
       style={bStyles.listItem}
@@ -41,7 +41,7 @@ export const TokenItem = props => {
       titleEllipsizeMode="tail"
       descriptionEllipsizeMode="tail"
       onPress={() => {
-        props.navigation.navigate('TokenDetailScreen', tokenClicked);
+        props.navigation.navigate('TokenDetailScreen', props.token);
       }}
       title={isToken(props.token)}
       description={props.token.confirmed}
