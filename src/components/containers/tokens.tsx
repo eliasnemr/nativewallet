@@ -19,7 +19,8 @@ function hasDescription(token) {
 function hasIcon(token) {
   return token.token &&
     typeof token.token === 'object' &&
-    typeof token.token.icon === 'string'
+    typeof token.token.icon === 'string' &&
+    token.token.icon.length > 0
     ? token.token.icon
     : 'folder';
 }
@@ -46,11 +47,7 @@ export const TokenItem = (props: any) => {
       title={isToken(props.token)}
       description={props.token.confirmed}
       left={props => (
-        <List.Icon
-          {...props}
-          style={bStyles.listIcon}
-          icon="alpha-m-circle-outline"
-        />
+        <List.Icon {...props} style={bStyles.listIcon} icon="alpha-m-circle" />
       )}
     />
   );

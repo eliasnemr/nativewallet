@@ -82,6 +82,8 @@ const CreateTokenScreen = () => {
     mode: 'onChange',
   });
 
+  const [btnText, setBtnText] = useState('Create Token');
+
   return (
     <View style={styles.containerStyle}>
       <ScrollView contentContainerStyle={styles.scrollViewStyle}>
@@ -147,7 +149,10 @@ const CreateTokenScreen = () => {
         />
         <Button
           mode={'contained'}
+          disabled={btnText !== 'Create Token' ? true : false}
           onPress={handleSubmit((data: any) => {
+            setBtnText('Minting...');
+
             const customToken = {
               name: {
                 name: data.name,
@@ -162,6 +167,8 @@ const CreateTokenScreen = () => {
                 if (res.status) {
                   Alert.alert('Transaction successful!');
 
+                  setBtnText('Create Token');
+
                   reset(); // reset form?
                 } else {
                   throw new Error(res.message);
@@ -169,11 +176,15 @@ const CreateTokenScreen = () => {
                 console.log(res);
               })
               .catch(err => {
+                setBtnText('Failed.');
                 Alert.alert(`${err}`);
+                setTimeout(() => {
+                  setBtnText('Create Token');
+                }, 2000);
               });
             console.log('form data', data);
           })}>
-          Create Token
+          {btnText}
         </Button>
       </ScrollView>
     </View>
@@ -185,6 +196,7 @@ const SendScreen = () => {
   // const [amount, setAmount] = useState('');
   // const [tokenid, setTokenid] = useState('');
   const [balance, setBalance] = useState([]);
+  const [btnText, setBtnText] = useState('Send');
 
   const {control, setFocus, handleSubmit, reset} = useForm({
     defaultValues: {
@@ -271,14 +283,16 @@ const SendScreen = () => {
         />
         <Button
           mode={'contained'}
+          disabled={btnText !== 'Send' ? true : false}
           onPress={handleSubmit((data: any) => {
             console.log('form data', data);
+            setBtnText('Creating Transaction...');
 
             send(data)
               .then(res => {
                 if (res.status) {
+                  setBtnText('Send');
                   Alert.alert('Transaction successful!');
-
                   reset(); // reset form?
                 } else {
                   throw new Error(res.message);
@@ -286,10 +300,14 @@ const SendScreen = () => {
                 console.log(res);
               })
               .catch(err => {
+                setBtnText('Failed');
                 Alert.alert(`${err}`);
+                setTimeout(() => {
+                  setBtnText('Send');
+                }, 2000);
               });
           })}>
-          Send
+          {btnText}
         </Button>
       </ScrollView>
     </View>
