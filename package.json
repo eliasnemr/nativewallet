@@ -11,8 +11,9 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
-  "dependencies":  {
+  "dependencies": {
     "@mobile-reality/react-native-select-pro": "^1.2.0",
+    "@react-native-clipboard/clipboard": "^1.9.0",
     "@react-native-community/clipboard": "^1.5.1",
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.0.6",

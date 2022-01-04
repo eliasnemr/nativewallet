@@ -19,7 +19,6 @@ import {
   Searchbar,
   Text,
   Card,
-  Title,
   Paragraph,
   Avatar,
   Divider,
@@ -27,7 +26,8 @@ import {
 
 import {TokenItem} from '../containers/tokens';
 import {bStyles, tokenStyle} from '../../styles';
-import {Alert, Clipboard} from 'react-native';
+import {Alert} from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 import {StatusRow} from '../containers/statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
 const Drawer = createDrawerNavigator();
