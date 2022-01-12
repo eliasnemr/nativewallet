@@ -47,6 +47,7 @@ export interface Status {
   };
   network: {
     host: string;
+    hostset: boolean;
     port: number;
     connecting: number;
     connected: number;
@@ -59,9 +60,9 @@ export interface Status {
       numNotAcceptingConnP2PLinks: number;
       numNoneP2PLinks: number;
       numKnownPeers: number;
-    };
-    sshtunnel: {
-      enabled: boolean;
+      numAllLinks: number;
+      nio_inbound: number;
+      nio_outbound: number;
     };
   };
 }

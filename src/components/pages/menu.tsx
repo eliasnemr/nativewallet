@@ -35,7 +35,7 @@ const Drawer = createDrawerNavigator();
 const DrawerContent = ({navigation}: any) => {
   return (
     <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Minima Wallet v0.1.0</Text>
+      <Text>Minima Wallet v0.1.2</Text>
       <Button
         onPress={() => {
           navigation.navigate('Balance');
@@ -567,6 +567,9 @@ const StatusScreen = () => {
           left={props => <List.Icon {...props} icon="folder" />}>
           <StatusRow data={status?.network.host} property={'Host'}></StatusRow>
           <StatusRow
+            data={status?.network.hostset ? 'True' : 'False'}
+            property={'Host Set'}></StatusRow>
+          <StatusRow
             data={status?.network.port}
             property={'Host Port'}></StatusRow>
           <StatusRow
@@ -585,9 +588,84 @@ const StatusScreen = () => {
           <StatusRow
             data={status?.network.p2p ? 'Enabled' : 'Disabled'}
             property={'P2P Status'}></StatusRow>
-          <StatusRow
-            data={status?.network.sshtunnel.enabled ? 'Enabled' : 'Disabled'}
-            property={'SSH Tunnel'}></StatusRow>
+
+          <List.Accordion
+            style={bStyles.listItemInner}
+            title="P2P"
+            left={props => <List.Icon {...props} icon="folder" />}>
+            <StatusRow
+              inner={true}
+              data={status?.network.p2p.address}
+              property={'Address'}></StatusRow>
+            <StatusRow
+              inner={true}
+              data={status?.network.p2p.isAcceptingInLinks ? 'True' : 'False'}
+              property={'AcceptingInLinks'}></StatusRow>
+            <StatusRow
+              inner={true}
+              data={
+                status?.network.p2p.numInLinks
+                  ? status?.network.p2p.numInLinks
+                  : '0'
+              }
+              property={'Number of inLinks'}></StatusRow>
+            <StatusRow
+              inner={true}
+              data={
+                status?.network.p2p.numOutLinks
+                  ? status?.network.p2p.numOutLinks
+                  : '0'
+              }
+              property={'Number of outLinks'}></StatusRow>
+            <StatusRow
+              inner={true}
+              data={
+                status?.network.p2p.numNotAcceptingConnP2PLinks
+                  ? status?.network.p2p.numNotAcceptingConnP2PLinks
+                  : '0'
+              }
+              property={'Number not accepting P2P Links'}></StatusRow>
+            <StatusRow
+              inner={true}
+              data={
+                status?.network.p2p.numNoneP2PLinks
+                  ? status?.network.p2p.numNoneP2PLinks
+                  : '0'
+              }
+              property={'None P2P Links'}></StatusRow>
+            <StatusRow
+              inner={true}
+              data={
+                status?.network.p2p.numKnownPeers
+                  ? status?.network.p2p.numKnownPeers
+                  : '0'
+              }
+              property={'Number of known Peers'}></StatusRow>
+            <StatusRow
+              inner={true}
+              data={
+                status?.network.p2p.numAllLinks
+                  ? status?.network.p2p.numAllLinks
+                  : '0'
+              }
+              property={'Number of all Links'}></StatusRow>
+            <StatusRow
+              inner={true}
+              data={
+                status?.network.p2p.nio_inbound
+                  ? status.network.p2p.nio_inbound
+                  : '0'
+              }
+              property={'NIO Inbound'}></StatusRow>
+            <StatusRow
+              inner={true}
+              data={
+                status?.network.p2p.nio_outbound
+                  ? status?.network.p2p.nio_outbound
+                  : '0'
+              }
+              property={'Nio Outbound'}></StatusRow>
+          </List.Accordion>
         </List.Accordion>
       </List.Section>
     </ScrollView>
