@@ -29,7 +29,6 @@ import {bStyles, tokenStyle} from '../../styles';
 import {Alert} from 'react-native';
 import {StatusRow} from '../containers/statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
-import Clipboard from '@react-native-clipboard/clipboard';
 const Drawer = createDrawerNavigator();
 
 const DrawerContent = ({navigation}: any) => {

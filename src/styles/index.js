@@ -1,5 +1,6 @@
 import {transform} from '@babel/core';
 import {StyleSheet} from 'react-native';
+import {useTheme} from '@react-navigation/native';
 /** Screens */
 export const bStyles = StyleSheet.create({
   view: {
@@ -13,7 +14,7 @@ export const bStyles = StyleSheet.create({
     },
   },
   listItem: {
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    //backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 12,
     paddingLeft: 0,
     marginBottom: 14,
@@ -21,7 +22,7 @@ export const bStyles = StyleSheet.create({
     backdropFilter: 'blur(50px)',
   },
   listItemInner: {
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    //backgroundColor: 'rgba(255, 255, 255, 0.5)',
     borderRadius: 12,
     paddingLeft: 0,
     marginBottom: 14,
@@ -60,7 +61,7 @@ export const bStyles = StyleSheet.create({
 export const tokenStyle = StyleSheet.create({
   view: {
     borderRadius: 12,
-    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    // backgroundColor: 'rgba(255, 255, 255, 0.5)',
     margin: 14,
     boxShadow: '0px 4px 15px rgba(0, 0, 0, 0.1)',
     backdropFilter: 'blur(50px)',
