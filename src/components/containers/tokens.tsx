@@ -26,12 +26,6 @@ function hasIcon(token) {
 }
 
 export const TokenItem = (props: any) => {
-  //console.log(props);
-  const tokenClicked = {
-    tokenName: isToken(props.token),
-    description: hasDescription(props.token),
-    icon: hasIcon(props.token),
-  };
   return (
     <List.Item
       style={bStyles.listItem}

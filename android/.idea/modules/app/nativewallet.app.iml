@@ -133,8 +133,9 @@
     <orderEntry type="library" name="Gradle: artifacts:react-native-reanimated:unspecified" level="project" />
     <orderEntry type="module" module-name="nativewallet.react-native-screens" />
     <orderEntry type="module" module-name="nativewallet.react-native-safe-area-context" />
-    <orderEntry type="module" module-name="nativewallet.react-native-community_clipboard" />
+    <orderEntry type="module" module-name="nativewallet.react-native-clipboard_clipboard" />
     <orderEntry type="module" module-name="nativewallet.react-native-gesture-handler" />
+    <orderEntry type="module" module-name="nativewallet.react-native-svg" />
     <orderEntry type="module" module-name="nativewallet.react-native-vector-icons" />
   </component>
 </module>
