@@ -2,14 +2,14 @@ import React, {useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {useFocusEffect} from '@react-navigation/native';
-import {Balance, Status} from '../../types';
+import {Balance, Status} from '../types';
 import {
   callAddress,
   callBalance,
   callStatus,
   tokencreate,
   send,
-} from '../../api/rpc-commands';
+} from '../api/rpc-commands';
 import {FormBuilder} from 'react-native-paper-form-builder';
 import {useForm} from 'react-hook-form';
 
@@ -24,10 +24,10 @@ import {
   Divider,
 } from 'react-native-paper';
 
-import {TokenItem} from '../containers/tokens';
-import {bStyles, tokenStyle} from '../../styles';
+import {TokenItem} from './tokens';
+import {bStyles, tokenStyle} from '../styles';
 import {Alert} from 'react-native';
-import {StatusRow} from '../containers/statusRow';
+import {StatusRow} from './statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
 const Drawer = createDrawerNavigator();
 
@@ -710,7 +710,7 @@ const TokenDetailScreen = ({route}) => {
               margin: 14,
               marginBottom: 0,
             }}
-            source={require('../../assets/icon.png')}
+            source={require('../../assets/images/icon.png')}
           />
         ) : (
           <Avatar.Image
@@ -723,7 +723,7 @@ const TokenDetailScreen = ({route}) => {
             source={{
               uri: tokenSelectedDetails.token.icon
                 ? tokenSelectedDetails.token.icon
-                : '../../assets/icon.png',
+                : '../../assets/images/icon.png',
             }}
           />
         )}

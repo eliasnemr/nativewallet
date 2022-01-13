@@ -1,6 +1,6 @@
 import React from 'react';
 import {List} from 'react-native-paper';
-import {bStyles} from '../../styles';
+import {bStyles} from '../styles';
 
 function isToken(token) {
   return token.token &&

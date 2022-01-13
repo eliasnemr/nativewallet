@@ -1,6 +1,6 @@
 import React from 'react';
 import {List} from 'react-native-paper';
-import {bStyles} from '../../styles';
+import {bStyles} from '../styles';
 
 export const StatusRow = props => {
   // console.log(props);
