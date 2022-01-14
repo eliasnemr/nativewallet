@@ -102,6 +102,8 @@ export interface MenuNavigationProps {
   readonly bottom?: number;
   readonly top?: number;
   readonly navigationItems: NavigationItem[];
+  readonly goto: Function; // pass navigation function
+  currentState: string; // will change according to opened Screen
 }
 export interface MenuHeaderProps {
   readonly title?: string;
@@ -117,4 +119,5 @@ export interface MenuHeaderProps {
 export interface NavigationItem {
   readonly title: string;
   readonly path: string;
+  active: boolean; // will be changed according to opened Screen
 }

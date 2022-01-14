@@ -1,14 +1,16 @@
 import React, {FC} from 'react';
-import {Menu} from 'react-native-paper';
+import {List, RadioButton} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MenuNavigationProps} from '../../types';
+import {StyleSheet} from 'react-native';
 
 export const MenuNavigation: FC<MenuNavigationProps> = props => {
-  console.log(props);
   return (
     <SafeAreaView
       style={[
         {
+          paddingStart: 20,
+          paddingEnd: 20,
           marginTop: props?.top ? props?.top : 0,
           marginLeft: props?.left ? props?.left : 0,
           marginRight: props?.right ? props?.right : 0,
@@ -16,18 +18,43 @@ export const MenuNavigation: FC<MenuNavigationProps> = props => {
         },
       ]}>
       {props.navigationItems.map((n, index) => {
+        if (n.path === props.currentState) {
+          n.active = true;
+        } else {
+          n.active = false;
+        }
+
         return (
-          <Menu.Item
+          <List.Item
+            style={style.list}
+            left={() => {
+              return (
+                <RadioButton
+                  color="#317AFF"
+                  value={n.title}
+                  status={n.active ? 'checked' : 'unchecked'}
+                  onPress={() => {
+                    props.goto(n.path);
+                  }}
+                />
+              );
+            }}
             key={index}
             title={n.title}
             onPress={() => {
-              console.log(n.path);
-            }}></Menu.Item>
+              props.goto(n.path);
+            }}></List.Item>
         );
       })}
-
-      {/* props.navigation.map()
-      <Menu.Item icon={props?.icon} onPress={() => {}} title=""></Menu.Item> */}
     </SafeAreaView>
   );
 };
+
+const style = StyleSheet.create({
+  list: {
+    paddingStart: 0,
+    paddingBottom: 15,
+    borderBottomColor: '#D3D3D8',
+    borderBottomWidth: 1,
+  },
+});

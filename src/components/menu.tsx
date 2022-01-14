@@ -42,26 +42,36 @@ const NavigationItems: NavigationItem[] = [
   {
     title: 'Balance',
     path: 'Balance',
+    active: true,
   },
   {
     title: 'Send',
     path: 'Send',
+    active: false,
   },
   {
     title: 'Receive',
     path: 'Address',
+    active: false,
   },
   {
     title: 'Status',
     path: 'Status',
+    active: false,
   },
   {
     title: 'Token',
     path: 'Token',
+    active: false,
   },
 ];
 
 const DrawerContent: FC<DrawerContentComponentProps> = props => {
+  const [currentScreen, setCurrentScreen] = useState('Balance');
+  function toggleNavigation(route: string) {
+    props.navigation.navigate(route);
+    setCurrentScreen(route);
+  }
   return (
     <>
       <MenuHeader
@@ -70,39 +80,10 @@ const DrawerContent: FC<DrawerContentComponentProps> = props => {
         left={28}
         right={21.2}
         bottom={49}></MenuHeader>
-      <MenuNavigation navigationItems={NavigationItems}></MenuNavigation>
-      {/* <View>
-        <Button
-          onPress={() => {
-            props.navigation.navigate('Balance');
-          }}>
-          Home
-        </Button>
-        <Button
-          onPress={() => {
-            props.navigation.navigate('Status');
-          }}>
-          Status
-        </Button>
-        <Button
-          onPress={() => {
-            props.navigation.navigate('Address');
-          }}>
-          Address
-        </Button>
-        <Button
-          onPress={() => {
-            props.navigation.navigate('Send');
-          }}>
-          Send
-        </Button>
-        <Button
-          onPress={() => {
-            props.navigation.navigate('Token');
-          }}>
-          Token
-        </Button>
-      </View> */}
+      <MenuNavigation
+        goto={toggleNavigation}
+        currentState={currentScreen}
+        navigationItems={NavigationItems}></MenuNavigation>
     </>
   );
 };
