@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {useFocusEffect} from '@react-navigation/native';
+import {
+  createDrawerNavigator,
+  DrawerContentComponentProps,
+} from '@react-navigation/drawer';
+import {NavigationState, useFocusEffect} from '@react-navigation/native';
 import {Balance, Status} from '../types';
 import {
   callAddress,
@@ -29,43 +32,78 @@ import {bStyles, tokenStyle} from '../styles';
 import {Alert} from 'react-native';
 import {StatusRow} from './statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
+import {MenuHeader} from './atoms/MenuHeader';
+import {MenuNavigation} from './atoms/MenuNavigation';
+
+import {NavigationItem} from '../types';
 const Drawer = createDrawerNavigator();
 
-const DrawerContent = ({navigation}: any) => {
+const NavigationItems: NavigationItem[] = [
+  {
+    title: 'Balance',
+    path: 'Balance',
+  },
+  {
+    title: 'Send',
+    path: 'Send',
+  },
+  {
+    title: 'Receive',
+    path: 'Address',
+  },
+  {
+    title: 'Status',
+    path: 'Status',
+  },
+  {
+    title: 'Token',
+    path: 'Token',
+  },
+];
+
+const DrawerContent: FC<DrawerContentComponentProps> = props => {
   return (
-    <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Text>Minima Wallet v0.1.2</Text>
-      <Button
-        onPress={() => {
-          navigation.navigate('Balance');
-        }}>
-        Home
-      </Button>
-      <Button
-        onPress={() => {
-          navigation.navigate('Status');
-        }}>
-        Status
-      </Button>
-      <Button
-        onPress={() => {
-          navigation.navigate('Address');
-        }}>
-        Address
-      </Button>
-      <Button
-        onPress={() => {
-          navigation.navigate('Send');
-        }}>
-        Send
-      </Button>
-      <Button
-        onPress={() => {
-          navigation.navigate('Token');
-        }}>
-        Token
-      </Button>
-    </View>
+    <>
+      <MenuHeader
+        title="Wallet"
+        top={49}
+        left={28}
+        right={21.2}
+        bottom={49}></MenuHeader>
+      <MenuNavigation navigationItems={NavigationItems}></MenuNavigation>
+      {/* <View>
+        <Button
+          onPress={() => {
+            props.navigation.navigate('Balance');
+          }}>
+          Home
+        </Button>
+        <Button
+          onPress={() => {
+            props.navigation.navigate('Status');
+          }}>
+          Status
+        </Button>
+        <Button
+          onPress={() => {
+            props.navigation.navigate('Address');
+          }}>
+          Address
+        </Button>
+        <Button
+          onPress={() => {
+            props.navigation.navigate('Send');
+          }}>
+          Send
+        </Button>
+        <Button
+          onPress={() => {
+            props.navigation.navigate('Token');
+          }}>
+          Token
+        </Button>
+      </View> */}
+    </>
   );
 };
 
@@ -710,7 +748,7 @@ const TokenDetailScreen = ({route}) => {
               margin: 14,
               marginBottom: 0,
             }}
-            source={require('../../assets/images/icon.png')}
+            source={require('../assets/images/icon.png')}
           />
         ) : (
           <Avatar.Image
@@ -723,7 +761,7 @@ const TokenDetailScreen = ({route}) => {
             source={{
               uri: tokenSelectedDetails.token.icon
                 ? tokenSelectedDetails.token.icon
-                : '../../assets/images/icon.png',
+                : '../assets/images/icon.png',
             }}
           />
         )}
@@ -814,7 +852,10 @@ const TokenDetailScreen = ({route}) => {
   );
 };
 
-const BalanceScreen = props => {
+interface iProps {
+  navigation: NavigationState;
+}
+const BalanceScreen = (props: iProps) => {
   const [balance, setBalance] = useState<Balance[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = query => setSearchQuery(query);
@@ -879,7 +920,6 @@ export const RootNavigator = () => {
       <Drawer.Screen name="Address" component={AddressScreen} />
       <Drawer.Screen name="Send" component={SendScreen} />
       <Drawer.Screen name="Token" component={CreateTokenScreen} />
-
       <Drawer.Screen name="TokenDetailScreen" component={TokenDetailScreen} />
     </Drawer.Navigator>
   );
