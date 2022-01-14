@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
+import {StyleSheet} from 'react-native';
 import {List, RadioButton} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {MenuNavigationProps} from '../../types';
-import {StyleSheet} from 'react-native';
 
 export const MenuNavigation: FC<MenuNavigationProps> = props => {
   return (

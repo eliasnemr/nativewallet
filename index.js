@@ -35,7 +35,7 @@ const darkTheme = {
     background: '#000000',
     backgroundColor: '#000',
     color: '#fff',
-    primary: '#3498db',
+    primary: '#317AFF',
     accent: '#f1c40f',
   },
 };
@@ -49,7 +49,7 @@ const theme = {
     background: '#fff',
     backgroundColor: '#fff',
     color: '000',
-    primary: '#3498db',
+    primary: '#317AFF',
     accent: '#f1c40f',
   },
 };

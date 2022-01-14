@@ -113,6 +113,27 @@ export interface MenuHeaderProps {
   readonly top?: number;
 }
 
+export interface MenuBalanceSectionProps {
+  readonly left?: number;
+  readonly right?: number;
+  readonly bottom?: number;
+  readonly top?: number;
+  readonly minima: string;
+}
+
+export interface MenuBackupButtonProps {
+  readonly left?: number;
+  readonly right?: number;
+  readonly bottom?: number;
+  readonly top?: number;
+}
+export interface MenuPoweredBySectionProps {
+  readonly left?: number;
+  readonly right?: number;
+  readonly bottom?: number;
+  readonly top?: number;
+}
+
 /**
  * Functional Component Datatypes
  */

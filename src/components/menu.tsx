@@ -36,6 +36,9 @@ import {MenuHeader} from './atoms/MenuHeader';
 import {MenuNavigation} from './atoms/MenuNavigation';
 
 import {NavigationItem} from '../types';
+import {MenuBalanceSection} from './atoms/MenuBalanceSection';
+import {MenuBackupButton} from './atoms/MenuBackupButton';
+import {MenuPoweredBySection} from './atoms/MenuPoweredBySection';
 const Drawer = createDrawerNavigator();
 
 const NavigationItems: NavigationItem[] = [
@@ -73,18 +76,26 @@ const DrawerContent: FC<DrawerContentComponentProps> = props => {
     setCurrentScreen(route);
   }
   return (
-    <>
-      <MenuHeader
-        title="Wallet"
-        top={49}
-        left={28}
-        right={21.2}
-        bottom={49}></MenuHeader>
-      <MenuNavigation
-        goto={toggleNavigation}
-        currentState={currentScreen}
-        navigationItems={NavigationItems}></MenuNavigation>
-    </>
+    <ScrollView
+      contentContainerStyle={{flexGrow: 1, justifyContent: 'space-between'}}>
+      <View>
+        <MenuHeader
+          title="Wallet"
+          top={49}
+          left={28}
+          right={21.2}
+          bottom={49}></MenuHeader>
+        <MenuNavigation
+          goto={toggleNavigation}
+          currentState={currentScreen}
+          navigationItems={NavigationItems}></MenuNavigation>
+      </View>
+      <View style={{justifyContent: 'space-evenly', flex: 1}}>
+        <MenuBalanceSection minima="99"></MenuBalanceSection>
+        <MenuBackupButton></MenuBackupButton>
+        <MenuPoweredBySection></MenuPoweredBySection>
+      </View>
+    </ScrollView>
   );
 };
 
