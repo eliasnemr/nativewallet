@@ -39,6 +39,7 @@ import {NavigationItem} from '../types';
 import {MenuBalanceSection} from './atoms/MenuBalanceSection';
 import {MenuBackupButton} from './atoms/MenuBackupButton';
 import {MenuPoweredBySection} from './atoms/MenuPoweredBySection';
+import Clipboard from '@react-native-clipboard/clipboard';
 const Drawer = createDrawerNavigator();
 
 const NavigationItems: NavigationItem[] = [
