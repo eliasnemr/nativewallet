@@ -71,10 +71,25 @@ const NavigationItems: NavigationItem[] = [
 
 const DrawerContent: FC<DrawerContentComponentProps> = props => {
   const [currentScreen, setCurrentScreen] = useState('Balance');
+  const [balance, setBalance] = useState<Balance | null>(null);
   function toggleNavigation(route: string) {
     props.navigation.navigate(route);
     setCurrentScreen(route);
   }
+  useFocusEffect(
+    React.useCallback(() => {
+      callBalance()
+        .then(data => {
+          data.response.forEach((el: Balance) =>
+            el.tokenid === '0x00' ? setBalance(el) : null,
+          );
+        })
+        .catch(err => {
+          console.log(`ERROR: ${err}`);
+        });
+      return () => {};
+    }, []),
+  );
   return (
     <ScrollView
       contentContainerStyle={{flexGrow: 1, justifyContent: 'space-between'}}>
@@ -91,7 +106,10 @@ const DrawerContent: FC<DrawerContentComponentProps> = props => {
           navigationItems={NavigationItems}></MenuNavigation>
       </View>
       <View style={{justifyContent: 'space-evenly', flex: 1}}>
-        <MenuBalanceSection minima="99"></MenuBalanceSection>
+        <MenuBalanceSection
+          minima={
+            balance?.confirmed ? balance?.confirmed : 'unavailable'
+          }></MenuBalanceSection>
         <MenuBackupButton></MenuBackupButton>
         <MenuPoweredBySection></MenuPoweredBySection>
       </View>

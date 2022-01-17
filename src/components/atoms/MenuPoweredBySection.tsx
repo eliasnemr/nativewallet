@@ -8,24 +8,23 @@ export const MenuPoweredBySection: FC<MenuPoweredBySectionProps> = props => {
   return (
     <SafeAreaView
       style={{
-        flexDirection: 'row',
-
         paddingStart: 20,
         paddingEnd: 20,
+        flexDirection: 'row',
         marginTop: props?.top ? props?.top : 0,
         marginLeft: props?.left ? props?.left : 0,
         marginRight: props?.right ? props?.right : 0,
         marginBottom: props?.bottom ? props?.bottom : 0,
       }}>
-      <Caption>Powered By</Caption>
+      <Caption style={{flex: 2}}>Powered By</Caption>
       <Image
         style={style.image}
-        source={require('../../assets/images/icon.png')}
+        source={require('../../assets/images/minima-landscape.png')}
       />
     </SafeAreaView>
   );
 };
 
 const style = StyleSheet.create({
-  image: {maxWidth: 70, maxHeight: 60},
+  image: {width: 120, height: 23, flex: 3},
 });

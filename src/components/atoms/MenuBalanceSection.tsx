@@ -30,7 +30,6 @@ const style = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    letter: 2,
     fontWeight: '700',
     fontStyle: 'italic',
   },
