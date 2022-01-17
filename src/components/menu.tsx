@@ -32,89 +32,17 @@ import {bStyles, tokenStyle} from '../styles';
 import {Alert} from 'react-native';
 import {StatusRow} from './statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
-import {MenuHeader} from './atoms/MenuHeader';
-import {MenuNavigation} from './atoms/MenuNavigation';
 
-import {NavigationItem} from '../types';
-import {MenuBalanceSection} from './atoms/MenuBalanceSection';
-import {MenuBackupButton} from './atoms/MenuBackupButton';
-import {MenuPoweredBySection} from './atoms/MenuPoweredBySection';
 import Clipboard from '@react-native-clipboard/clipboard';
+import Menu from './organisms/Menu';
 const Drawer = createDrawerNavigator();
 
-const NavigationItems: NavigationItem[] = [
-  {
-    title: 'Balance',
-    path: 'Balance',
-    active: true,
-  },
-  {
-    title: 'Send',
-    path: 'Send',
-    active: false,
-  },
-  {
-    title: 'Receive',
-    path: 'Address',
-    active: false,
-  },
-  {
-    title: 'Status',
-    path: 'Status',
-    active: false,
-  },
-  {
-    title: 'Token',
-    path: 'Token',
-    active: false,
-  },
-];
-
 const DrawerContent: FC<DrawerContentComponentProps> = props => {
-  const [currentScreen, setCurrentScreen] = useState('Balance');
-  const [balance, setBalance] = useState<Balance | null>(null);
-  function toggleNavigation(route: string) {
-    props.navigation.navigate(route);
-    setCurrentScreen(route);
-  }
-  useFocusEffect(
-    React.useCallback(() => {
-      callBalance()
-        .then(data => {
-          data.response.forEach((el: Balance) =>
-            el.tokenid === '0x00' ? setBalance(el) : null,
-          );
-        })
-        .catch(err => {
-          console.log(`ERROR: ${err}`);
-        });
-      return () => {};
-    }, []),
-  );
   return (
-    <ScrollView
-      contentContainerStyle={{flexGrow: 1, justifyContent: 'space-between'}}>
-      <View>
-        <MenuHeader
-          title="Wallet"
-          top={49}
-          left={28}
-          right={21.2}
-          bottom={49}></MenuHeader>
-        <MenuNavigation
-          goto={toggleNavigation}
-          currentState={currentScreen}
-          navigationItems={NavigationItems}></MenuNavigation>
-      </View>
-      <View style={{justifyContent: 'space-evenly', flex: 1}}>
-        <MenuBalanceSection
-          minima={
-            balance?.confirmed ? balance?.confirmed : 'unavailable'
-          }></MenuBalanceSection>
-        <MenuBackupButton></MenuBackupButton>
-        <MenuPoweredBySection></MenuPoweredBySection>
-      </View>
-    </ScrollView>
+    <Menu
+      navigation={props.navigation}
+      descriptors={props.descriptors}
+      state={props.state}></Menu>
   );
 };
 
