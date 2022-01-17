@@ -157,3 +157,6 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Android res Drawables
+.android/app/main/res/drawable-*
