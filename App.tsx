@@ -8,7 +8,7 @@
  * @format
  */
 import React from 'react';
-import {RootNavigator} from './src/components/pages/menu';
+import {RootNavigator} from './src/components/menu';
 
 const App = () => {
   return <RootNavigator></RootNavigator>;

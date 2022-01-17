@@ -1,5 +1,5 @@
 /**
- * All Minima Objects
+ * Minima Objects
  */
 export interface Status {
   version: string;
@@ -79,7 +79,7 @@ export interface Balance {
   total: string;
 }
 /**
- * All Form Objects
+ * Form Objects
  */
 export interface SendTokensForm {
   address: string;
@@ -90,4 +90,55 @@ export interface FormAlertMessage {
   status: string;
   header: string;
   message: string;
+}
+
+/**
+ * Functional Component Props
+ */
+export interface MenuNavigationProps {
+  readonly title?: string;
+  readonly left?: number;
+  readonly right?: number;
+  readonly bottom?: number;
+  readonly top?: number;
+  readonly navigationItems: NavigationItem[];
+  readonly goto: Function; // pass navigation function
+  currentState: string; // will change according to opened Screen
+}
+export interface MenuHeaderProps {
+  readonly title?: string;
+  readonly left?: number;
+  readonly right?: number;
+  readonly bottom?: number;
+  readonly top?: number;
+}
+
+export interface MenuBalanceSectionProps {
+  readonly left?: number;
+  readonly right?: number;
+  readonly bottom?: number;
+  readonly top?: number;
+  readonly minima: string;
+}
+
+export interface MenuBackupButtonProps {
+  readonly left?: number;
+  readonly right?: number;
+  readonly bottom?: number;
+  readonly top?: number;
+}
+export interface MenuPoweredBySectionProps {
+  readonly left?: number;
+  readonly right?: number;
+  readonly bottom?: number;
+  readonly top?: number;
+}
+
+/**
+ * Functional Component Datatypes
+ */
+export interface NavigationItem {
+  readonly title: string;
+  readonly path: string;
+  active: boolean; // will be changed according to opened Screen
 }
