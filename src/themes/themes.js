@@ -39,7 +39,7 @@ export const lightTheme = {
     ...NavigationDefaultTheme.colors,
     background: '#fff',
     backgroundColor: '#fff',
-    color: '000',
+    color: '#363A3F',
     primary: '#317AFF',
     accent: '#f1c40f',
   },

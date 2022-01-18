@@ -3,7 +3,6 @@ import {appLayout} from '../styles';
 import {NavigationState} from '@react-navigation/native';
 import {ImageBackground, useColorScheme} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
-import BalanceSearchBar from '../components/atoms/BalanceSearchBar';
 import Balance from '../components/organisms/Balance';
 
 interface iProps {
@@ -24,7 +23,6 @@ const BalanceScreen: FC = () => {
         justifyContent: 'center',
       }}>
       <ScrollView style={appLayout.sv}>
-        <BalanceSearchBar></BalanceSearchBar>
         <Balance></Balance>
       </ScrollView>
     </ImageBackground>

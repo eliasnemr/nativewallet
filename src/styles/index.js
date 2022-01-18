@@ -4,7 +4,7 @@ import {useTheme} from '@react-navigation/native';
 
 /** Main app layout */
 export const appLayout = StyleSheet.create({
-  sv: {padding: 18},
+  sv: {paddingTop: 30, paddingLeft: 23, paddingRight: 23},
 });
 /** Screens */
 export const bStyles = StyleSheet.create({

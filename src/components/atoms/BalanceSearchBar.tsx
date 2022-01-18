@@ -1,14 +1,15 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {Searchbar} from 'react-native-paper';
 import {colorPalette} from '../../themes/themes';
+import {BalanceSearchBarProps} from '../../types';
 
-const BalanceSearchBar: FC = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const onChangeSearch = (query: string) => setSearchQuery(query);
+const BalanceSearchBar: FC<BalanceSearchBarProps> = props => {
+  // const [searchQuery, setSearchQuery] = useState('');
+  // const onChangeSearch = (query: string) => setSearchQuery(query);
   // Generate shadow according to Platform
   generateBoxShadowStyle(
-    -2,
+    0,
     4,
     'rgba(0, 0, 0, 0.1)',
     0.2,
@@ -18,9 +19,9 @@ const BalanceSearchBar: FC = () => {
   );
   return (
     <Searchbar
-      value={searchQuery}
-      onChangeText={onChangeSearch}
-      placeholder="Search for a token"
+      value={props.searchQuery}
+      onChangeText={props.onChangeSearch}
+      placeholder={props.placeholder}
       iconColor={colorPalette.colors.primary}
       style={[style.sb, styles.boxShadow]}
       inputStyle={style.sb.inputStyle}></Searchbar>
@@ -32,9 +33,10 @@ export default BalanceSearchBar;
 const style = StyleSheet.create({
   sb: {
     borderRadius: 8,
-    marginBottom: 15,
+    marginBottom: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
     inputStyle: {
-      backgroundColor: 'rgba(255, 255, 255, 0.5)',
+      backgroundColor: 'transparent',
       fontSize: 14,
     },
     boxShadow: {},

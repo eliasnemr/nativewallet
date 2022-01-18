@@ -71,12 +71,17 @@ interface Token {
   name: string;
 }
 
-export interface Balance {
-  token: any;
+export interface MinimaToken {
+  token: string & CustomTokenJson;
   tokenid: string;
   confirmed: string;
   unconfirmed: string;
   total: string;
+}
+interface CustomTokenJson {
+  name: string;
+  description: string;
+  icon: string;
 }
 /**
  * Form Objects
@@ -132,6 +137,19 @@ export interface MenuPoweredBySectionProps {
   readonly right?: number;
   readonly bottom?: number;
   readonly top?: number;
+}
+
+export interface BalanceTokenProps {
+  t: MinimaToken;
+}
+export interface BalanceTokenListProps {
+  readonly balance: MinimaToken[];
+  readonly filter: string;
+}
+export interface BalanceSearchBarProps {
+  readonly searchQuery: string;
+  readonly onChangeSearch: (query: string) => void;
+  readonly placeholder: string;
 }
 
 /**
