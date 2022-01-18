@@ -1,6 +1,11 @@
 import {transform} from '@babel/core';
 import {StyleSheet} from 'react-native';
 import {useTheme} from '@react-navigation/native';
+
+/** Main app layout */
+export const appLayout = StyleSheet.create({
+  sv: {padding: 18},
+});
 /** Screens */
 export const bStyles = StyleSheet.create({
   view: {
@@ -122,6 +127,3 @@ export const tokenStyle = StyleSheet.create({
     opacity: 0.5,
   },
 });
-
-// box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-// backdrop-filter: blur(50px);

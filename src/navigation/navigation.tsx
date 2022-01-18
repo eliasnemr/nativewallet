@@ -16,6 +16,8 @@ import {
 import {FormBuilder} from 'react-native-paper-form-builder';
 import {useForm} from 'react-hook-form';
 
+import BalanceScreen from '../screens/BalanceScreen';
+
 import {
   Button,
   List,
@@ -810,7 +812,7 @@ const TokenDetailScreen = ({route}) => {
 interface iProps {
   navigation: NavigationState;
 }
-const BalanceScreen = (props: iProps) => {
+const BalanceScreenOld = (props: iProps) => {
   const [balance, setBalance] = useState<Balance[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = query => setSearchQuery(query);
