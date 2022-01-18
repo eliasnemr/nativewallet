@@ -1,5 +1,11 @@
 import React, {FC, useState} from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {
+  Image,
+  ImageBackground,
+  StyleSheet,
+  useColorScheme,
+  View,
+} from 'react-native';
 import {
   createDrawerNavigator,
   DrawerContentComponentProps,
@@ -32,17 +38,90 @@ import {bStyles, tokenStyle} from '../styles';
 import {Alert} from 'react-native';
 import {StatusRow} from './statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
+import {MenuHeader} from './atoms/MenuHeader';
+import {MenuNavigation} from './atoms/MenuNavigation';
 
+import {NavigationItem} from '../types';
+import {MenuBalanceSection} from './atoms/MenuBalanceSection';
+import {MenuBackupButton} from './atoms/MenuBackupButton';
+import {MenuPoweredBySection} from './atoms/MenuPoweredBySection';
 import Clipboard from '@react-native-clipboard/clipboard';
-import Menu from './organisms/Menu';
+import BackgroundScreenImage from './atoms/BackgroundScreenImage';
 const Drawer = createDrawerNavigator();
 
+const NavigationItems: NavigationItem[] = [
+  {
+    title: 'Balance',
+    path: 'Balance',
+    active: true,
+  },
+  {
+    title: 'Send',
+    path: 'Send',
+    active: false,
+  },
+  {
+    title: 'Receive',
+    path: 'Address',
+    active: false,
+  },
+  {
+    title: 'Status',
+    path: 'Status',
+    active: false,
+  },
+  {
+    title: 'Token',
+    path: 'Token',
+    active: false,
+  },
+];
+
 const DrawerContent: FC<DrawerContentComponentProps> = props => {
+  const [currentScreen, setCurrentScreen] = useState('Balance');
+  const [balance, setBalance] = useState<Balance | null>(null);
+  function toggleNavigation(route: string) {
+    props.navigation.navigate(route);
+    setCurrentScreen(route);
+  }
+  useFocusEffect(
+    React.useCallback(() => {
+      callBalance()
+        .then(data => {
+          data.response.forEach((el: Balance) =>
+            el.tokenid === '0x00' ? setBalance(el) : null,
+          );
+        })
+        .catch(err => {
+          console.log(`ERROR: ${err}`);
+        });
+      return () => {};
+    }, []),
+  );
   return (
-    <Menu
-      navigation={props.navigation}
-      descriptors={props.descriptors}
-      state={props.state}></Menu>
+    <ScrollView
+      contentContainerStyle={{flexGrow: 1, justifyContent: 'space-between'}}>
+      <View>
+        <MenuHeader
+          title="Wallet"
+          top={49}
+          left={28}
+          right={21.2}
+          bottom={49}></MenuHeader>
+        <MenuNavigation
+          goto={toggleNavigation}
+          currentState={currentScreen}
+          navigationItems={NavigationItems}></MenuNavigation>
+      </View>
+      <View style={{justifyContent: 'space-evenly', flex: 1}}>
+        <MenuBalanceSection
+          minima={
+            balance?.confirmed ? balance?.confirmed : 'unavailable'
+          }></MenuBalanceSection>
+        <MenuBackupButton></MenuBackupButton>
+        <MenuPoweredBySection></MenuPoweredBySection>
+      </View>
+    </ScrollView>
   );
 };
 
@@ -798,6 +877,7 @@ const BalanceScreen = (props: iProps) => {
   const [balance, setBalance] = useState<Balance[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = query => setSearchQuery(query);
+  const scheme = useColorScheme();
   useFocusEffect(
     React.useCallback(() => {
       callBalance()
@@ -815,39 +895,41 @@ const BalanceScreen = (props: iProps) => {
   );
 
   return (
-    <ScrollView>
-      <View style={bStyles.view}>
-        <Searchbar
-          style={bStyles.searchbar}
-          inputStyle={bStyles.searchbar.inputStyle}
-          placeholder="Search Token"
-          onChangeText={onChangeSearch}
-          value={searchQuery}></Searchbar>
+    <BackgroundScreenImage>
+      <ScrollView>
+        <View style={bStyles.view}>
+          <Searchbar
+            style={bStyles.searchbar}
+            inputStyle={bStyles.searchbar.inputStyle}
+            placeholder="Search Token"
+            onChangeText={onChangeSearch}
+            value={searchQuery}></Searchbar>
 
-        {balance ? (
-          balance
-            .filter(token =>
-              searchQuery.length > 0
-                ? token.tokenid.includes(searchQuery) ||
-                  (token.token &&
-                    typeof token.token === 'string' &&
-                    token.token.includes(searchQuery)) ||
-                  (token.token.name &&
-                    typeof token.token.name === 'string' &&
-                    token.token.name.includes(searchQuery))
-                : true,
-            )
-            .map(t => (
-              <TokenItem
-                navigation={props.navigation}
-                key={t.tokenid}
-                token={t}></TokenItem>
-            ))
-        ) : (
-          <Text>No Balance available</Text>
-        )}
-      </View>
-    </ScrollView>
+          {balance ? (
+            balance
+              .filter(token =>
+                searchQuery.length > 0
+                  ? token.tokenid.includes(searchQuery) ||
+                    (token.token &&
+                      typeof token.token === 'string' &&
+                      token.token.includes(searchQuery)) ||
+                    (token.token.name &&
+                      typeof token.token.name === 'string' &&
+                      token.token.name.includes(searchQuery))
+                  : true,
+              )
+              .map(t => (
+                <TokenItem
+                  navigation={props.navigation}
+                  key={t.tokenid}
+                  token={t}></TokenItem>
+              ))
+          ) : (
+            <Text>No Balance available</Text>
+          )}
+        </View>
+      </ScrollView>
+    </BackgroundScreenImage>
   );
 };
 
