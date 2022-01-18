@@ -18,6 +18,7 @@ import {
 } from '@react-navigation/native';
 import {SelectProvider} from '@mobile-reality/react-native-select-pro';
 import {useColorScheme} from 'react-native';
+import {lightTheme, darkTheme} from './src/themes/themes';
 
 // Wrapping react-native-paper as a top level component.
 // If there is another provider (like redux)
@@ -25,7 +26,7 @@ import {useColorScheme} from 'react-native';
   If you have another provider (such as Redux), wrap it outside PaperProvider so that 
   the context is available to components rendered inside a Modal from the library:
  */
-const darkTheme = {
+const darkThemeOld = {
   ...PaperDarkTheme,
   ...NavigationDarkTheme,
   roundness: 2,
@@ -39,7 +40,7 @@ const darkTheme = {
     accent: '#f1c40f',
   },
 };
-const theme = {
+const themeOld = {
   ...PaperDefaultTheme,
   ...NavigationDefaultTheme,
   roundness: 2,
@@ -58,9 +59,9 @@ export default function Main() {
   const scheme = useColorScheme();
   console.log('User has ' + scheme + ' theme on.');
   return (
-    <PaperProvider theme={scheme === 'dark' ? darkTheme : theme}>
+    <PaperProvider theme={scheme === 'dark' ? darkTheme : lightTheme}>
       <SelectProvider>
-        <NavigationContainer theme={scheme === 'dark' ? darkTheme : theme}>
+        <NavigationContainer theme={scheme === 'dark' ? darkTheme : lightTheme}>
           <App />
         </NavigationContainer>
       </SelectProvider>

@@ -5,7 +5,7 @@ import {
   DrawerContentComponentProps,
 } from '@react-navigation/drawer';
 import {NavigationState, useFocusEffect} from '@react-navigation/native';
-import {Balance, Status} from '../types';
+import {Status} from '../types';
 import {
   callAddress,
   callBalance,
@@ -15,6 +15,8 @@ import {
 } from '../api/rpc-commands';
 import {FormBuilder} from 'react-native-paper-form-builder';
 import {useForm} from 'react-hook-form';
+
+import BalanceScreen from '../screens/BalanceScreen';
 
 import {
   Button,
@@ -34,7 +36,6 @@ import {StatusRow} from '../components/statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
 
 import Clipboard from '@react-native-clipboard/clipboard';
-import BackgroundScreenImage from '../components/atoms/BackgroundScreenImage';
 import Menu from '../components/organisms/Menu';
 const Drawer = createDrawerNavigator();
 
@@ -74,111 +75,109 @@ const CreateTokenScreen = () => {
   const [btnText, setBtnText] = useState('Create Token');
 
   return (
-    <BackgroundScreenImage>
-      <View style={styles.containerStyle}>
-        <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-          <FormBuilder
-            control={control}
-            setFocus={setFocus}
-            formConfigArray={[
-              {
-                type: 'text',
-                name: 'name',
+    <View style={styles.containerStyle}>
+      <ScrollView contentContainerStyle={styles.scrollViewStyle}>
+        <FormBuilder
+          control={control}
+          setFocus={setFocus}
+          formConfigArray={[
+            {
+              type: 'text',
+              name: 'name',
 
-                rules: {
-                  required: {
-                    value: true,
-                    message: 'A token name is required.',
-                  },
-                },
-                textInputProps: {
-                  label: 'Name',
+              rules: {
+                required: {
+                  value: true,
+                  message: 'A token name is required.',
                 },
               },
-              {
-                type: 'text',
-                name: 'amount',
+              textInputProps: {
+                label: 'Name',
+              },
+            },
+            {
+              type: 'text',
+              name: 'amount',
 
-                rules: {
-                  required: {
-                    value: true,
-                    message: 'Amount is required',
-                  },
-                },
-                textInputProps: {
-                  label: 'Amount',
+              rules: {
+                required: {
+                  value: true,
+                  message: 'Amount is required',
                 },
               },
-              {
-                type: 'text',
-                name: 'description',
-                rules: {
-                  required: {
-                    value: false,
-                    message: '',
-                  },
-                },
-                textInputProps: {
-                  label: 'Description',
+              textInputProps: {
+                label: 'Amount',
+              },
+            },
+            {
+              type: 'text',
+              name: 'description',
+              rules: {
+                required: {
+                  value: false,
+                  message: '',
                 },
               },
-              {
-                type: 'text',
-                name: 'icon',
-                rules: {
-                  required: {
-                    value: false,
-                    message: '',
-                  },
-                },
-                textInputProps: {
-                  label: 'Icon',
+              textInputProps: {
+                label: 'Description',
+              },
+            },
+            {
+              type: 'text',
+              name: 'icon',
+              rules: {
+                required: {
+                  value: false,
+                  message: '',
                 },
               },
-            ]}
-          />
-          <Button
-            mode={'contained'}
-            disabled={btnText !== 'Create Token' ? true : false}
-            onPress={handleSubmit((data: any) => {
-              setBtnText('Minting...');
+              textInputProps: {
+                label: 'Icon',
+              },
+            },
+          ]}
+        />
+        <Button
+          mode={'contained'}
+          disabled={btnText !== 'Create Token' ? true : false}
+          onPress={handleSubmit((data: any) => {
+            setBtnText('Minting...');
 
-              const customToken = {
-                name: {
-                  name: data.name,
-                  description: data.description,
-                  icon: data.icon,
-                },
-                amount: data.amount,
-              };
+            const customToken = {
+              name: {
+                name: data.name,
+                description: data.description,
+                icon: data.icon,
+              },
+              amount: data.amount,
+            };
 
-              tokencreate(customToken)
-                .then(res => {
-                  if (res.status) {
-                    Alert.alert('Transaction successful!');
+            tokencreate(customToken)
+              .then(res => {
+                if (res.status) {
+                  Alert.alert('Transaction successful!');
 
-                    setBtnText('Create Token');
+                  setBtnText('Create Token');
 
-                    reset(); // reset form?
-                  } else {
-                    throw new Error(res.message);
-                  }
-                  console.log(res);
-                })
-                .catch(err => {
-                  setBtnText('Failed.');
-                  Alert.alert(`${err}`);
-                  setTimeout(() => {
-                    setBtnText('Create Token');
-                  }, 2000);
-                });
-              console.log('form data', data);
-            })}>
-            {btnText}
-          </Button>
-        </ScrollView>
-      </View>
-    </BackgroundScreenImage>
+                  reset(); // reset form?
+                } else {
+                  throw new Error(res.message);
+                }
+                console.log(res);
+              })
+              .catch(err => {
+                setBtnText('Failed.');
+                Alert.alert(`${err}`);
+                setTimeout(() => {
+                  setBtnText('Create Token');
+                }, 2000);
+              });
+            console.log('form data', data);
+          })}>
+          {btnText}
+        </Button>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -214,7 +213,7 @@ const SendScreen = () => {
     }, []),
   );
 
-  const tokens = balance.map((t: Balance) => {
+  const tokens = balance.map((t: MinimaCustomToken) => {
     return {
       value: t.tokenid,
       label: typeof t.token === 'string' ? t.token : t.token.name,
@@ -810,8 +809,8 @@ const TokenDetailScreen = ({route}) => {
 interface iProps {
   navigation: NavigationState;
 }
-const BalanceScreen = (props: iProps) => {
-  const [balance, setBalance] = useState<Balance[]>([]);
+const BalanceScreenOld = (props: iProps) => {
+  const [balance, setBalance] = useState<MinimaCustomToken[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = query => setSearchQuery(query);
   useFocusEffect(
@@ -831,40 +830,38 @@ const BalanceScreen = (props: iProps) => {
   );
 
   return (
-    <BackgroundScreenImage>
-      <ScrollView>
-        <View style={bStyles.view}>
-          <Searchbar
-            style={bStyles.searchbar}
-            inputStyle={bStyles.searchbar.inputStyle}
-            placeholder="Search Token"
-            onChangeText={onChangeSearch}
-            value={searchQuery}></Searchbar>
+    <ScrollView>
+      <View style={bStyles.view}>
+        <Searchbar
+          style={bStyles.searchbar}
+          inputStyle={bStyles.searchbar.inputStyle}
+          placeholder="Search Token"
+          onChangeText={onChangeSearch}
+          value={searchQuery}></Searchbar>
 
-          {balance ? (
-            balance
-              .filter(token =>
-                searchQuery.length > 0
-                  ? token.tokenid.includes(searchQuery) ||
-                    (token.token &&
-                      typeof token.token === 'string' &&
-                      token.token.includes(searchQuery)) ||
-                    (token.token.name &&
-                      typeof token.token.name === 'string' &&
-                      token.token.name.includes(searchQuery))
-                  : true,
-              )
-              .map(t => (
-                <TokenItem
-                  navigation={props.navigation}
-                  key={t.tokenid}
-                  token={t}></TokenItem>
-              ))
-          ) : (
-            <Text>No Balance available</Text>
-          )}
-        </View>
-      </ScrollView>
-    </BackgroundScreenImage>
+        {balance ? (
+          balance
+            .filter(token =>
+              searchQuery.length > 0
+                ? token.tokenid.includes(searchQuery) ||
+                  (token.token &&
+                    typeof token.token === 'string' &&
+                    token.token.includes(searchQuery)) ||
+                  (token.token.name &&
+                    typeof token.token.name === 'string' &&
+                    token.token.name.includes(searchQuery))
+                : true,
+            )
+            .map(t => (
+              <TokenItem
+                navigation={props.navigation}
+                key={t.tokenid}
+                token={t}></TokenItem>
+            ))
+        ) : (
+          <Text>No Balance available</Text>
+        )}
+      </View>
+    </ScrollView>
   );
 };
