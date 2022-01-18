@@ -7,14 +7,22 @@ const BalanceSearchBar: FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = (query: string) => setSearchQuery(query);
   // Generate shadow according to Platform
-  generateBoxShadowStyle(-2, 4, '#171717', 0.2, 3, 4, '#171717');
+  generateBoxShadowStyle(
+    -2,
+    4,
+    'rgba(0, 0, 0, 0.1)',
+    0.2,
+    3,
+    4,
+    'rgba(0, 0, 0, 0.1)',
+  );
   return (
     <Searchbar
       value={searchQuery}
       onChangeText={onChangeSearch}
-      placeholder="Search Token"
+      placeholder="Search for a token"
       iconColor={colorPalette.colors.primary}
-      style={[style.sb, style.sb.boxShadow]}
+      style={[style.sb, styles.boxShadow]}
       inputStyle={style.sb.inputStyle}></Searchbar>
   );
 };
@@ -37,6 +45,11 @@ const style = StyleSheet.create({
   },
 });
 
+/** using a non-Stylesheet as a quickfix to a readonly property for styles in generic StyleSheet */
+const styles = {
+  boxShadow: {},
+};
+
 /** BoxShadow both iOS & Android */
 const generateBoxShadowStyle = (
   xOffset: number,
@@ -48,14 +61,14 @@ const generateBoxShadowStyle = (
   shadowColorAndroid: string,
 ) => {
   if (Platform.OS === 'ios') {
-    style.sb.boxShadow = {
+    styles.boxShadow = {
       shadowColor: shadowColorIos,
       shadowOffset: {width: xOffset, height: yOffset},
       shadowOpacity,
       shadowRadius,
     };
   } else if (Platform.OS === 'android') {
-    style.sb.boxShadow = {
+    styles.boxShadow = {
       elevation,
       shadowColor: shadowColorAndroid,
     };
