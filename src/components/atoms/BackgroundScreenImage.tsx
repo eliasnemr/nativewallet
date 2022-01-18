@@ -15,7 +15,6 @@ const BackgroundScreenImage: FC = () => {
       style={{
         flex: 1,
         justifyContent: 'center',
-        height: '100%',
       }}></ImageBackground>
   );
 };

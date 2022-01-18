@@ -1,11 +1,5 @@
 import React, {FC, useState} from 'react';
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {
   createDrawerNavigator,
   DrawerContentComponentProps,
@@ -33,95 +27,36 @@ import {
   Divider,
 } from 'react-native-paper';
 
-import {TokenItem} from './tokens';
+import {TokenItem} from '../components/tokens';
 import {bStyles, tokenStyle} from '../styles';
 import {Alert} from 'react-native';
-import {StatusRow} from './statusRow';
+import {StatusRow} from '../components/statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
-import {MenuHeader} from './atoms/MenuHeader';
-import {MenuNavigation} from './atoms/MenuNavigation';
 
-import {NavigationItem} from '../types';
-import {MenuBalanceSection} from './atoms/MenuBalanceSection';
-import {MenuBackupButton} from './atoms/MenuBackupButton';
-import {MenuPoweredBySection} from './atoms/MenuPoweredBySection';
 import Clipboard from '@react-native-clipboard/clipboard';
-import BackgroundScreenImage from './atoms/BackgroundScreenImage';
+import BackgroundScreenImage from '../components/atoms/BackgroundScreenImage';
+import Menu from '../components/organisms/Menu';
 const Drawer = createDrawerNavigator();
 
-const NavigationItems: NavigationItem[] = [
-  {
-    title: 'Balance',
-    path: 'Balance',
-    active: true,
-  },
-  {
-    title: 'Send',
-    path: 'Send',
-    active: false,
-  },
-  {
-    title: 'Receive',
-    path: 'Address',
-    active: false,
-  },
-  {
-    title: 'Status',
-    path: 'Status',
-    active: false,
-  },
-  {
-    title: 'Token',
-    path: 'Token',
-    active: false,
-  },
-];
-
 const DrawerContent: FC<DrawerContentComponentProps> = props => {
-  const [currentScreen, setCurrentScreen] = useState('Balance');
-  const [balance, setBalance] = useState<Balance | null>(null);
-  function toggleNavigation(route: string) {
-    props.navigation.navigate(route);
-    setCurrentScreen(route);
-  }
-  useFocusEffect(
-    React.useCallback(() => {
-      callBalance()
-        .then(data => {
-          data.response.forEach((el: Balance) =>
-            el.tokenid === '0x00' ? setBalance(el) : null,
-          );
-        })
-        .catch(err => {
-          console.log(`ERROR: ${err}`);
-        });
-      return () => {};
-    }, []),
-  );
   return (
-    <ScrollView
-      contentContainerStyle={{flexGrow: 1, justifyContent: 'space-between'}}>
-      <View>
-        <MenuHeader
-          title="Wallet"
-          top={49}
-          left={28}
-          right={21.2}
-          bottom={49}></MenuHeader>
-        <MenuNavigation
-          goto={toggleNavigation}
-          currentState={currentScreen}
-          navigationItems={NavigationItems}></MenuNavigation>
-      </View>
-      <View style={{justifyContent: 'space-evenly', flex: 1}}>
-        <MenuBalanceSection
-          minima={
-            balance?.confirmed ? balance?.confirmed : 'unavailable'
-          }></MenuBalanceSection>
-        <MenuBackupButton></MenuBackupButton>
-        <MenuPoweredBySection></MenuPoweredBySection>
-      </View>
-    </ScrollView>
+    <Menu
+      state={props.state}
+      navigation={props.navigation}
+      descriptors={props.descriptors}></Menu>
+  );
+};
+
+export const RootNavigator = () => {
+  return (
+    <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+      <Drawer.Screen name="Balance" component={BalanceScreen} />
+      <Drawer.Screen name="Status" component={StatusScreen} />
+      <Drawer.Screen name="Address" component={AddressScreen} />
+      <Drawer.Screen name="Send" component={SendScreen} />
+      <Drawer.Screen name="Token" component={CreateTokenScreen} />
+      <Drawer.Screen name="TokenDetailScreen" component={TokenDetailScreen} />
+    </Drawer.Navigator>
   );
 };
 
@@ -139,109 +74,111 @@ const CreateTokenScreen = () => {
   const [btnText, setBtnText] = useState('Create Token');
 
   return (
-    <View style={styles.containerStyle}>
-      <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-        <FormBuilder
-          control={control}
-          setFocus={setFocus}
-          formConfigArray={[
-            {
-              type: 'text',
-              name: 'name',
+    <BackgroundScreenImage>
+      <View style={styles.containerStyle}>
+        <ScrollView contentContainerStyle={styles.scrollViewStyle}>
+          <FormBuilder
+            control={control}
+            setFocus={setFocus}
+            formConfigArray={[
+              {
+                type: 'text',
+                name: 'name',
 
-              rules: {
-                required: {
-                  value: true,
-                  message: 'A token name is required.',
+                rules: {
+                  required: {
+                    value: true,
+                    message: 'A token name is required.',
+                  },
+                },
+                textInputProps: {
+                  label: 'Name',
                 },
               },
-              textInputProps: {
-                label: 'Name',
-              },
-            },
-            {
-              type: 'text',
-              name: 'amount',
+              {
+                type: 'text',
+                name: 'amount',
 
-              rules: {
-                required: {
-                  value: true,
-                  message: 'Amount is required',
+                rules: {
+                  required: {
+                    value: true,
+                    message: 'Amount is required',
+                  },
+                },
+                textInputProps: {
+                  label: 'Amount',
                 },
               },
-              textInputProps: {
-                label: 'Amount',
-              },
-            },
-            {
-              type: 'text',
-              name: 'description',
-              rules: {
-                required: {
-                  value: false,
-                  message: '',
+              {
+                type: 'text',
+                name: 'description',
+                rules: {
+                  required: {
+                    value: false,
+                    message: '',
+                  },
+                },
+                textInputProps: {
+                  label: 'Description',
                 },
               },
-              textInputProps: {
-                label: 'Description',
-              },
-            },
-            {
-              type: 'text',
-              name: 'icon',
-              rules: {
-                required: {
-                  value: false,
-                  message: '',
+              {
+                type: 'text',
+                name: 'icon',
+                rules: {
+                  required: {
+                    value: false,
+                    message: '',
+                  },
+                },
+                textInputProps: {
+                  label: 'Icon',
                 },
               },
-              textInputProps: {
-                label: 'Icon',
-              },
-            },
-          ]}
-        />
-        <Button
-          mode={'contained'}
-          disabled={btnText !== 'Create Token' ? true : false}
-          onPress={handleSubmit((data: any) => {
-            setBtnText('Minting...');
+            ]}
+          />
+          <Button
+            mode={'contained'}
+            disabled={btnText !== 'Create Token' ? true : false}
+            onPress={handleSubmit((data: any) => {
+              setBtnText('Minting...');
 
-            const customToken = {
-              name: {
-                name: data.name,
-                description: data.description,
-                icon: data.icon,
-              },
-              amount: data.amount,
-            };
+              const customToken = {
+                name: {
+                  name: data.name,
+                  description: data.description,
+                  icon: data.icon,
+                },
+                amount: data.amount,
+              };
 
-            tokencreate(customToken)
-              .then(res => {
-                if (res.status) {
-                  Alert.alert('Transaction successful!');
+              tokencreate(customToken)
+                .then(res => {
+                  if (res.status) {
+                    Alert.alert('Transaction successful!');
 
-                  setBtnText('Create Token');
+                    setBtnText('Create Token');
 
-                  reset(); // reset form?
-                } else {
-                  throw new Error(res.message);
-                }
-                console.log(res);
-              })
-              .catch(err => {
-                setBtnText('Failed.');
-                Alert.alert(`${err}`);
-                setTimeout(() => {
-                  setBtnText('Create Token');
-                }, 2000);
-              });
-            console.log('form data', data);
-          })}>
-          {btnText}
-        </Button>
-      </ScrollView>
-    </View>
+                    reset(); // reset form?
+                  } else {
+                    throw new Error(res.message);
+                  }
+                  console.log(res);
+                })
+                .catch(err => {
+                  setBtnText('Failed.');
+                  Alert.alert(`${err}`);
+                  setTimeout(() => {
+                    setBtnText('Create Token');
+                  }, 2000);
+                });
+              console.log('form data', data);
+            })}>
+            {btnText}
+          </Button>
+        </ScrollView>
+      </View>
+    </BackgroundScreenImage>
   );
 };
 
@@ -877,7 +814,6 @@ const BalanceScreen = (props: iProps) => {
   const [balance, setBalance] = useState<Balance[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = query => setSearchQuery(query);
-  const scheme = useColorScheme();
   useFocusEffect(
     React.useCallback(() => {
       callBalance()
@@ -930,18 +866,5 @@ const BalanceScreen = (props: iProps) => {
         </View>
       </ScrollView>
     </BackgroundScreenImage>
-  );
-};
-
-export const RootNavigator = () => {
-  return (
-    <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
-      <Drawer.Screen name="Balance" component={BalanceScreen} />
-      <Drawer.Screen name="Status" component={StatusScreen} />
-      <Drawer.Screen name="Address" component={AddressScreen} />
-      <Drawer.Screen name="Send" component={SendScreen} />
-      <Drawer.Screen name="Token" component={CreateTokenScreen} />
-      <Drawer.Screen name="TokenDetailScreen" component={TokenDetailScreen} />
-    </Drawer.Navigator>
   );
 };
