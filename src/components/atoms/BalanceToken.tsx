@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {Image, Platform, StyleSheet} from 'react-native';
 import {List} from 'react-native-paper';
+import {colorPalette} from '../../themes/themes';
 import {BalanceTokenProps} from '../../types';
 
 const BalanceToken: FC<BalanceTokenProps> = props => {
@@ -24,11 +25,18 @@ const BalanceToken: FC<BalanceTokenProps> = props => {
       left={() => {
         return (
           <Image
-            style={style.leftIcon}
+            style={[
+              style.leftIcon,
+              props.t.token.icon && props.t.token.icon.length === 0
+                ? {borderWidth: 3, borderColor: colorPalette.colors.primary}
+                : null,
+            ]}
             source={
-              props.t.token.icon && props.t.token.icon.length > 0
+              props.t.tokenid === '0x00'
+                ? require('../../assets/images/icon.png')
+                : props.t.token.icon && props.t.token.icon.length > 0
                 ? {uri: props.t.token.icon}
-                : require('../../assets/images/icon.png')
+                : {uri: `https://robohash.org/${props.t.tokenid}`}
             }
           />
         );
