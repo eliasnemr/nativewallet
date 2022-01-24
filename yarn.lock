@@ -1321,12 +1321,13 @@
     "@types/yargs" "^16.0.0"
     "chalk" "^4.0.0"
 
-"@mobile-reality/react-native-select-pro@^1.2.0":
-  "integrity" "sha512-1qtFW3oxZFTjjbsxj0Pn8XhAQKqBcGNGEBmMNZwh0c9MaoHPRceZGoOFTPRuIlePPteodiBJVkHDPMkcI/9n9Q=="
-  "resolved" "https://registry.npmjs.org/@mobile-reality/react-native-select-pro/-/react-native-select-pro-1.2.0.tgz"
-  "version" "1.2.0"
+"@mobile-reality/react-native-select-pro@^1.3.0":
+  "integrity" "sha512-QNqQ8f5/bdlRuDLa66O3BGwZWKfdqV5sz0l7ueByfldBvyV5eqEpLbc7t3bkwwhCWf3qtbW+OFyB/m1lgwWQGg=="
+  "resolved" "https://registry.npmjs.org/@mobile-reality/react-native-select-pro/-/react-native-select-pro-1.3.0.tgz"
+  "version" "1.3.0"
   dependencies:
     "@gorhom/portal" "1.0.11"
+    "react-native-gesture-handler" "^2.1.0"
 
 "@react-native-clipboard/clipboard@^1.9.0":
   "integrity" "sha512-O/ohFq1CAQLfoNc376Z3W6gvVcCJlje5AVk0JhsI8Q40hn+NXAWCnOM1bEePfC0uDMtp0/RCK6FotUvkQ6c4Zw=="
@@ -5177,7 +5178,7 @@
   "resolved" "https://registry.npmjs.org/lodash.truncate/-/lodash.truncate-4.4.2.tgz"
   "version" "4.4.2"
 
-"lodash@^4.17.10", "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.7.0":
+"lodash@^4.17.10", "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.21", "lodash@^4.7.0":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
@@ -6371,6 +6372,17 @@
     "fbjs" "^3.0.0"
     "hoist-non-react-statics" "^3.3.0"
     "invariant" "^2.2.4"
+    "prop-types" "^15.7.2"
+
+"react-native-gesture-handler@^2.1.0":
+  "integrity" "sha512-WF25CNgn164bF9juW8N/jICIFXiEOgsxCuY7DRlnFdiH5ZfvMYtZHRC+zr1fFMap2ty1f2HWDQNVVSo0FDXP4A=="
+  "resolved" "https://registry.npmjs.org/react-native-gesture-handler/-/react-native-gesture-handler-2.2.0.tgz"
+  "version" "2.2.0"
+  dependencies:
+    "@egjs/hammerjs" "^2.0.17"
+    "hoist-non-react-statics" "^3.3.0"
+    "invariant" "^2.2.4"
+    "lodash" "^4.17.21"
     "prop-types" "^15.7.2"
 
 "react-native-iphone-x-helper@^1.3.1":

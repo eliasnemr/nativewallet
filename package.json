@@ -12,7 +12,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "@mobile-reality/react-native-select-pro": "^1.2.0",
+    "@mobile-reality/react-native-select-pro": "^1.3.0",
     "@react-native-clipboard/clipboard": "^1.9.0",
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.0.6",
