@@ -33,7 +33,7 @@ const BalanceToken: FC<BalanceTokenProps> = props => {
             ]}
             source={
               props.t.tokenid === '0x00'
-                ? require('../../assets/images/icon.png')
+                ? require('../../assets/images/minimaLogoSquare.png')
                 : props.t.token.icon && props.t.token.icon.length > 0
                 ? {uri: props.t.token.icon}
                 : {uri: `https://robohash.org/${props.t.tokenid}`}
