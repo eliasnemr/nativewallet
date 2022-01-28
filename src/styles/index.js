@@ -175,7 +175,7 @@ export const formStyle = StyleSheet.create({
     minHeight: 40,
   },
   formBtnLabel: {
-    fontSize: 18,
+    fontSize: 16,
     textTransform: 'none',
   },
   error: {

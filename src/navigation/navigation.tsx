@@ -11,7 +11,6 @@ import {
   callBalance,
   callStatus,
   tokencreate,
-  send,
 } from '../api/rpc-commands';
 import {FormBuilder} from 'react-native-paper-form-builder';
 import {useForm} from 'react-hook-form';
@@ -38,6 +37,7 @@ import {ScrollView} from 'react-native-gesture-handler';
 
 import Clipboard from '@react-native-clipboard/clipboard';
 import Menu from '../components/organisms/Menu';
+import ReceiveFundsScreen from '../screens/ReceiveFundsScreen';
 const Drawer = createDrawerNavigator();
 
 const DrawerContent: FC<DrawerContentComponentProps> = props => {
@@ -54,7 +54,7 @@ export const RootNavigator = () => {
     <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen name="Balance" component={BalanceScreen} />
       <Drawer.Screen name="Status" component={StatusScreen} />
-      <Drawer.Screen name="Address" component={AddressScreen} />
+      <Drawer.Screen name="Address" component={ReceiveFundsScreen} />
       <Drawer.Screen name="Send" component={TokenTransferScreen} />
       <Drawer.Screen name="Token" component={CreateTokenScreen} />
       <Drawer.Screen name="TokenDetailScreen" component={TokenDetailScreen} />
