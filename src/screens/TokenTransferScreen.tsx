@@ -33,8 +33,8 @@ const TokenTransferScreen: FC = () => {
     React.useCallback(() => {
       callBalance()
         .then(data => {
-          // setBalance(data.response);
-          setBalance([]);
+          setBalance(data.response);
+          // setBalance([]);
         })
         .catch(err => {
           console.log(`ERROR: ${err}`);
