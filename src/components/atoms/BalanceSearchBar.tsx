@@ -23,7 +23,7 @@ const BalanceSearchBar: FC<BalanceSearchBarProps> = props => {
       onChangeText={props.onChangeSearch}
       placeholder={props.placeholder}
       iconColor={colorPalette.colors.primary}
-      style={[style.sb, styles.boxShadow]}
+      style={[style.sb, styles.boxShadow, {marginBottom: props.mb}]}
       inputStyle={style.sb.inputStyle}></Searchbar>
   );
 };
@@ -33,7 +33,6 @@ export default BalanceSearchBar;
 const style = StyleSheet.create({
   sb: {
     borderRadius: 8,
-    marginBottom: 30,
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     inputStyle: {
       backgroundColor: 'transparent',

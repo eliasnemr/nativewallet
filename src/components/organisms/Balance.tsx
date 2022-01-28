@@ -31,7 +31,8 @@ const Balance: FC = () => {
       <BalanceSearchBar
         onChangeSearch={onChangeSearch}
         placeholder="Search for a token"
-        searchQuery={searchQuery}></BalanceSearchBar>
+        searchQuery={searchQuery}
+        mb={30}></BalanceSearchBar>
       <BalanceTokenList
         filter={searchQuery}
         balance={balance}></BalanceTokenList>

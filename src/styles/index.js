@@ -4,7 +4,30 @@ import {useTheme} from '@react-navigation/native';
 
 /** Main app layout */
 export const appLayout = StyleSheet.create({
-  sv: {paddingTop: 30, paddingLeft: 23, paddingRight: 23},
+  sv: {
+    paddingTop: 30,
+    paddingLeft: 23,
+    paddingRight: 23,
+  },
+  svna: {
+    paddingTop: 30,
+    paddingLeft: 23,
+    paddingRight: 23,
+    flex: 1,
+    alignItems: 'center',
+  },
+  na: {
+    fontWeight: '600',
+    lineHeight: 30,
+    marginTop: 10,
+    textAlign: 'center',
+  },
+  na503: {
+    fontSize: 40,
+  },
+  na503s: {
+    letterSpacing: 2,
+  },
 });
 /** Screens */
 export const bStyles = StyleSheet.create({
@@ -125,5 +148,43 @@ export const tokenStyle = StyleSheet.create({
     fontWeight: '400',
     maxWidth: '75%',
     opacity: 0.5,
+  },
+});
+
+export const formStyle = StyleSheet.create({
+  formMenu: {
+    width: '65%',
+    height: 50,
+  },
+  formMenuItem: {
+    width: '100%',
+  },
+  formInput: {
+    flex: 1,
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    paddingLeft: 15,
+    paddingRight: 15,
+    marginBottom: 16,
+    minHeight: 60,
+
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+  },
+  formBtn: {
+    borderRadius: 8,
+    minHeight: 40,
+  },
+  formBtnLabel: {
+    fontSize: 18,
+    textTransform: 'none',
+  },
+  error: {
+    backgroundColor: '#ff0033',
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '700',
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    paddingLeft: 13,
   },
 });

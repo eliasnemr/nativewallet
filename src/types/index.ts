@@ -150,6 +150,13 @@ export interface BalanceSearchBarProps {
   readonly searchQuery: string;
   readonly onChangeSearch: (query: string) => void;
   readonly placeholder: string;
+  mb: number;
+}
+
+export interface TokenMenuItemProps {
+  readonly t: MinimaToken;
+  readonly selectToken: (field: string) => void;
+  values: any;
 }
 
 /**

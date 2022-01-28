@@ -17,6 +17,7 @@ import {FormBuilder} from 'react-native-paper-form-builder';
 import {useForm} from 'react-hook-form';
 
 import BalanceScreen from '../screens/BalanceScreen';
+import TokenTransferScreen from '../screens/TokenTransferScreen';
 
 import {
   Button,
@@ -54,7 +55,7 @@ export const RootNavigator = () => {
       <Drawer.Screen name="Balance" component={BalanceScreen} />
       <Drawer.Screen name="Status" component={StatusScreen} />
       <Drawer.Screen name="Address" component={AddressScreen} />
-      <Drawer.Screen name="Send" component={SendScreen} />
+      <Drawer.Screen name="Send" component={TokenTransferScreen} />
       <Drawer.Screen name="Token" component={CreateTokenScreen} />
       <Drawer.Screen name="TokenDetailScreen" component={TokenDetailScreen} />
     </Drawer.Navigator>
@@ -190,7 +191,7 @@ const SendScreen = () => {
 
   const {control, setFocus, handleSubmit, reset} = useForm({
     defaultValues: {
-      tokenid: '',
+      tokenid: '0x00',
       address: '',
       amount: '',
     },
@@ -282,7 +283,10 @@ const SendScreen = () => {
               .then(res => {
                 if (res.status) {
                   setBtnText('Send');
-                  Alert.alert('Transaction successful!');
+                  Alert.alert(
+                    'Transaction successful!',
+                    'The transaction is valid and will be received shortly.',
+                  );
                   reset(); // reset form?
                 } else {
                   throw new Error(res.message);
@@ -291,7 +295,7 @@ const SendScreen = () => {
               })
               .catch(err => {
                 setBtnText('Failed');
-                Alert.alert(`${err}`);
+                Alert.alert(`Transaction failed`, `${err}`);
                 setTimeout(() => {
                   setBtnText('Send');
                 }, 2000);

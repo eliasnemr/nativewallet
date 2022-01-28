@@ -13,6 +13,8 @@ import java.util.ArrayList;
 
 // @react-native-clipboard/clipboard
 import com.reactnativecommunity.clipboard.ClipboardPackage;
+// @react-native-picker/picker
+import com.reactnativecommunity.picker.RNCPickerPackage;
 // react-native-gesture-handler
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 // react-native-reanimated
@@ -71,6 +73,7 @@ public class PackageList {
     return new ArrayList<>(Arrays.<ReactPackage>asList(
       new MainReactPackage(mConfig),
       new ClipboardPackage(),
+      new RNCPickerPackage(),
       new RNGestureHandlerPackage(),
       new ReanimatedPackage(),
       new SafeAreaContextPackage(),
