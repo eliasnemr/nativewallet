@@ -60,7 +60,6 @@ export const bStyles = StyleSheet.create({
   },
   listTitle: {
     fontSize: 14,
-    color: '#363A3F',
     fontWeight: '700',
   },
   listDescription: {
