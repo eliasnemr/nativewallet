@@ -4,24 +4,20 @@ import {
   createDrawerNavigator,
   DrawerContentComponentProps,
 } from '@react-navigation/drawer';
-import {NavigationState, useFocusEffect} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 import {Status} from '../types';
-import {
-  callAddress,
-  callBalance,
-  callStatus,
-  tokencreate,
-} from '../api/rpc-commands';
+import {callStatus, tokencreate} from '../api/rpc-commands';
 import {FormBuilder} from 'react-native-paper-form-builder';
 import {useForm} from 'react-hook-form';
 
 import BalanceScreen from '../screens/BalanceScreen';
 import TokenTransferScreen from '../screens/TokenTransferScreen';
 
+import {bStyles} from '../styles';
+
 import {
   Button,
   List,
-  Searchbar,
   Text,
   Card,
   Paragraph,
@@ -29,8 +25,6 @@ import {
   Divider,
 } from 'react-native-paper';
 
-import {TokenItem} from '../components/tokens';
-import {bStyles, tokenStyle} from '../styles';
 import {Alert} from 'react-native';
 import {StatusRow} from '../components/statusRow';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -197,69 +191,6 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
 });
-
-const AddressScreen = () => {
-  const [address, setAddress] = useState('');
-  const [copyText, setCopyText] = useState('Copy');
-
-  useFocusEffect(
-    React.useCallback(() => {
-      callAddress()
-        .then(data => {
-          if (data && data.response) {
-            setAddress(data.response.address);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-
-      return () => {
-        // Do something when the screen is unfocused
-        // Useful for cleanup functions
-      };
-    }, []),
-  );
-
-  const copyToClipboard = data => {
-    try {
-      setCopyText('Copied');
-      Clipboard.setString(data);
-      setTimeout(() => {
-        setCopyText('Copy');
-      }, 1000);
-    } catch (err) {
-      setCopyText('Failed');
-      setTimeout(() => {
-        setCopyText('Copy');
-      }, 1000);
-      Alert.alert(err);
-    }
-  };
-
-  return (
-    <View style={bStyles.view}>
-      <List.Section style={bStyles.listItem}>
-        <List.Item
-          title={address ? address : 'No address available'}
-          description={'Use this address to receive coins.'}
-          titleStyle={bStyles.listTitle}
-          titleEllipsizeMode="middle"
-          right={props => (
-            <Button
-              uppercase={false}
-              accessibilityLabel="Copy to clipboard"
-              compact={true}
-              onPress={() => {
-                copyToClipboard(address);
-              }}>
-              {copyText}
-            </Button>
-          )}></List.Item>
-      </List.Section>
-    </View>
-  );
-};
 
 const StatusScreen = () => {
   const [status, setStatus] = useState<Status | null>(null);
@@ -653,66 +584,6 @@ const TokenDetailScreen = ({route}) => {
           titleStyle={tokenStyle.listTitle}
           descriptionNumberOfLines={2}
           descriptionEllipsizeMode="tail"></List.Item>
-      </View>
-    </ScrollView>
-  );
-};
-
-interface iProps {
-  navigation: NavigationState;
-}
-const BalanceScreenOld = (props: iProps) => {
-  const [balance, setBalance] = useState<MinimaCustomToken[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const onChangeSearch = query => setSearchQuery(query);
-  useFocusEffect(
-    React.useCallback(() => {
-      callBalance()
-        .then(data => {
-          console.log(data);
-          setBalance(data.response);
-        })
-        .catch(err => {
-          console.log(`ERROR: ${err}`);
-        });
-      return () => {
-        // setBalance([]);
-      };
-    }, []),
-  );
-
-  return (
-    <ScrollView>
-      <View style={bStyles.view}>
-        <Searchbar
-          style={bStyles.searchbar}
-          inputStyle={bStyles.searchbar.inputStyle}
-          placeholder="Search Token"
-          onChangeText={onChangeSearch}
-          value={searchQuery}></Searchbar>
-
-        {balance ? (
-          balance
-            .filter(token =>
-              searchQuery.length > 0
-                ? token.tokenid.includes(searchQuery) ||
-                  (token.token &&
-                    typeof token.token === 'string' &&
-                    token.token.includes(searchQuery)) ||
-                  (token.token.name &&
-                    typeof token.token.name === 'string' &&
-                    token.token.name.includes(searchQuery))
-                : true,
-            )
-            .map(t => (
-              <TokenItem
-                navigation={props.navigation}
-                key={t.tokenid}
-                token={t}></TokenItem>
-            ))
-        ) : (
-          <Text>No Balance available</Text>
-        )}
       </View>
     </ScrollView>
   );
