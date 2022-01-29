@@ -6,7 +6,7 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {Button, List} from 'react-native-paper';
+import {Button, Caption, Card, List, Text} from 'react-native-paper';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {callAddress} from '../api/rpc-commands';
 import {useFocusEffect} from '@react-navigation/native';
@@ -15,6 +15,8 @@ import {appLayout, bStyles} from '../styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {formStyle} from '../styles';
 import ServiceUnavailable from '../components/organisms/ServiceUnavailable';
+
+import QrCode from 'react-qr-code';
 
 const storeAddress = async (value: string) => {
   try {
@@ -38,9 +40,7 @@ const ReceiveFundsScreen = () => {
         if (data && data.response) {
           setAddress(data.response.address);
           storeAddress(data.response.address);
-          setTimeout(() => {
-            setGenText('Generate');
-          }, 2000);
+          setGenText('Generate');
         }
       })
       .catch(err => {
@@ -100,15 +100,50 @@ const ReceiveFundsScreen = () => {
       style={{
         flex: 1,
       }}>
-      {address ? (
+      {address && address.length > 0 ? (
         <View style={appLayout.sv}>
-          <List.Section style={style.li}>
-            <List.Item
-              title={address ? address : 'No address available'}
-              description={'Use this address to receive coins.'}
-              titleStyle={bStyles.listTitle}
-              titleEllipsizeMode="middle"></List.Item>
-          </List.Section>
+          <Card elevation={0} style={style.card}>
+            <Card.Content>
+              <View style={style.qrcode}>
+                <QrCode
+                  bgColor="#000"
+                  fgColor="rgba(255, 255, 255, 0.5)"
+                  value={address}
+                />
+              </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                <View style={{flex: 2}}>
+                  <Caption>Wallet Address</Caption>
+                  <Text
+                    numberOfLines={1}
+                    ellipsizeMode="middle"
+                    style={bStyles.listTitle}>
+                    {address}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Button
+                    mode="outlined"
+                    disabled={copyText !== 'Copy'}
+                    labelStyle={{textTransform: 'none'}}
+                    onPress={() => {
+                      copyToClipboard(address);
+                    }}>
+                    {copyText}
+                  </Button>
+                </View>
+              </View>
+            </Card.Content>
+          </Card>
           <View
             style={{
               flex: 1,
@@ -118,20 +153,11 @@ const ReceiveFundsScreen = () => {
               uppercase={false}
               accessibilityLabel="Copy to clipboard"
               mode="contained"
-              style={[formStyle.formBtn, {marginBottom: 10}]}
-              labelStyle={formStyle.formBtnLabel}
-              disabled={copyText !== 'Copy'}
-              onPress={() => {
-                copyToClipboard(address);
-              }}>
-              {copyText}
-            </Button>
-            <Button
-              uppercase={false}
-              accessibilityLabel="Copy to clipboard"
-              mode="contained"
-              style={[formStyle.formBtn]}
-              labelStyle={formStyle.formBtnLabel}
+              style={[
+                formStyle.formBtn,
+                {borderTopRightRadius: 0, borderTopLeftRadius: 0},
+              ]}
+              labelStyle={[formStyle.formBtnLabel]}
               disabled={genText !== 'Generate'}
               onPress={() => {
                 generateAddress();
@@ -150,8 +176,20 @@ const ReceiveFundsScreen = () => {
 export default ReceiveFundsScreen;
 
 const style = StyleSheet.create({
+  copy: {
+    textTransform: 'none',
+  },
+  qrcode: {
+    alignItems: 'center',
+    padding: 30,
+  },
+  card: {
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: 8,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
   li: {
-    flex: 1,
     paddingLeft: 15,
     paddingRight: 15,
     marginBottom: 16,

@@ -19,6 +19,7 @@
     "@react-navigation/drawer": "^6.1.8",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "@types/react-native-vector-icons": "^6.4.10",
     "formik": "^2.2.9",
     "react": "17.0.2",
     "react-hook-form": "^7.22.1",
@@ -31,6 +32,7 @@
     "react-native-screens": "^3.9.0",
     "react-native-svg": "^12.1.1",
     "react-native-vector-icons": "^9.0.0",
+    "react-qr-code": "^2.0.3",
     "yup": "^0.32.11"
   },
   "devDependencies": {
