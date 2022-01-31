@@ -30,7 +30,7 @@ import {tokencreate} from '../api/rpc-commands';
 const CreateTokenSchema = Yup.object().shape({
   name: Yup.string().required('Field Required'),
   amount: Yup.string().required('Field Required'),
-  description: Yup.string(),
+  description: Yup.string().min(0).max(255, 'Maximum 255 characters allowed.'),
   url: Yup.string(),
 });
 
@@ -97,6 +97,8 @@ const CreateTokenScreen: FC = () => {
               onChangeText={handleChange('name')}
               onBlur={handleBlur('name')}
               value={values.name}
+              maxLength={255}
+              right={<TextInput.Affix text={values.name.length + '/255'} />}
             />
 
             {errors.amount && touched.amount ? (
@@ -119,6 +121,10 @@ const CreateTokenScreen: FC = () => {
               onChangeText={handleChange('description')}
               onBlur={handleBlur('description')}
               value={values.description}
+              maxLength={255}
+              right={
+                <TextInput.Affix text={values.description.length + '/255'} />
+              }
             />
 
             {errors.url && touched.url ? (
