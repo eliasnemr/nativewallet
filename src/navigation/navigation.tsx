@@ -27,6 +27,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Menu from '../components/organisms/Menu';
 import ReceiveFundsScreen from '../screens/ReceiveFundsScreen';
 import NodeStatusScreen from '../screens/NodeStatusScreen';
+import CreateTokenScreen from '../screens/CreateTokenScreen';
 const Drawer = createDrawerNavigator();
 
 const DrawerContent: FC<DrawerContentComponentProps> = props => {
@@ -51,7 +52,7 @@ export const RootNavigator = () => {
   );
 };
 
-const CreateTokenScreen = () => {
+const CreateTokenScreen_Old = () => {
   const {control, setFocus, handleSubmit, reset} = useForm({
     defaultValues: {
       name: '',
