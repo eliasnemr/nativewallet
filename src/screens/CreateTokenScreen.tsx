@@ -160,7 +160,7 @@ const CreateTokenScreen: FC = () => {
                   source={
                     values.url && values.url.length > 0
                       ? {uri: values.url}
-                      : {uri: 'https://picsum.photos/700'}
+                      : {uri: `https://robohash.org/0x00`}
                   }
                 />
                 <Divider />
@@ -171,6 +171,7 @@ const CreateTokenScreen: FC = () => {
                   titleNumberOfLines={1}
                   subtitleNumberOfLines={3}
                 />
+
                 <Divider />
                 <View style={style.cardCaptionWrapper}>
                   <Avatar.Image
