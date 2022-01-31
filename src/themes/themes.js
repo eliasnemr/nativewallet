@@ -13,7 +13,7 @@ import {
 export const colorPalette = {
   colors: {
     primary: '#317AFF',
-    accent: '#f1c40f',
+    accent: '#21252B',
   },
 };
 export const darkTheme = {
