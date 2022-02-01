@@ -26,7 +26,10 @@ export const MenuNavigation: FC<MenuNavigationProps> = props => {
 
         return (
           <List.Item
-            style={style.list}
+            style={[
+              style.list,
+              n.active ? {borderBottomColor: '#317AFF'} : null,
+            ]}
             left={() => {
               return (
                 <RadioButton
@@ -53,7 +56,6 @@ export const MenuNavigation: FC<MenuNavigationProps> = props => {
 const style = StyleSheet.create({
   list: {
     paddingStart: 0,
-    paddingBottom: 15,
     borderBottomColor: '#D3D3D8',
     borderBottomWidth: 1,
   },

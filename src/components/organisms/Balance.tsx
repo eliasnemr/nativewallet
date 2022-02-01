@@ -12,14 +12,16 @@ const Balance: FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      callBalance()
-        .then(data => {
-          console.log(data);
-          setBalance(data.response);
-        })
-        .catch(err => {
-          console.log(`ERROR: ${err}`);
-        });
+      setInterval(() => {
+        callBalance()
+          .then(data => {
+            console.log(data);
+            setBalance(data.response);
+          })
+          .catch(err => {
+            console.log(`ERROR: ${err}`);
+          });
+      }, 20000);
       return () => {
         // setBalance([]);
       };

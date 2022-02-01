@@ -12,15 +12,17 @@ const BottomPartMenuSection: FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      callBalance()
-        .then(data => {
-          data.response.forEach((el: Balance) =>
-            el.tokenid === '0x00' ? setBalance(el) : null,
-          );
-        })
-        .catch(err => {
-          console.log(`ERROR: ${err}`);
-        });
+      setInterval(() => {
+        callBalance()
+          .then(data => {
+            data.response.forEach((el: Balance) =>
+              el.tokenid === '0x00' ? setBalance(el) : null,
+            );
+          })
+          .catch(err => {
+            console.log(`ERROR: ${err}`);
+          });
+      }, 20000);
       return () => {};
     }, []),
   );
@@ -30,7 +32,7 @@ const BottomPartMenuSection: FC = () => {
         minima={
           balance?.confirmed ? balance?.confirmed : 'unavailable'
         }></MenuBalanceSection>
-      <MenuBackupButton></MenuBackupButton>
+      {/* <MenuBackupButton></MenuBackupButton> */}
       <MenuPoweredBySection></MenuPoweredBySection>
     </View>
   );

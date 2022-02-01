@@ -47,7 +47,7 @@ const TokenTransferScreen: FC = () => {
 
   return (
     <Formik
-      initialValues={{tokenid: '', address: '', amount: ''}}
+      initialValues={{tokenid: '0x00', address: '', amount: ''}}
       validationSchema={TransferTokenSchema}
       onSubmit={(values, {resetForm}) => {
         setBtnText('Constructing transaction...');
