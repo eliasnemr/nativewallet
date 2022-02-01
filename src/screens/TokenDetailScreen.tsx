@@ -30,8 +30,10 @@ const TokenDetailScreen: FC = (props: any) => {
   const scheme = useColorScheme();
   const [showMore, setShowMore] = useState(false);
   const [numOfLines, setNumOfLines] = useState(NUM_OF_LINES);
+  const [totalLines, setTotalLines] = useState(0);
   const onTextLayout = useCallback(
     e => {
+      setTotalLines(e.nativeEvent.lines.length);
       setShowMore(e.nativeEvent.lines.length > numOfLines);
     },
     [numOfLines],
@@ -115,21 +117,23 @@ const TokenDetailScreen: FC = (props: any) => {
               </Paragraph>
             )}
           </View>
-          <Text
-            onPress={() => {
-              {
-                // setNumOfLines(numOfLines + 1);
-                showMore
-                  ? setNumOfLines(numOfLines + 1)
-                  : setNumOfLines(NUM_OF_LINES);
-              }
-            }}
-            style={[style.showMore, showMore ? null : {color: 'red'}]}>
-            {showMore ? 'Show More' : 'Show Less'}{' '}
-            {showMore ? (
-              <Image source={require('../assets/images/vector.png')} />
-            ) : null}
-          </Text>
+          {description && description.length > 0 && totalLines > 5 ? (
+            <Text
+              onPress={() => {
+                {
+                  // setNumOfLines(numOfLines + 1);
+                  showMore
+                    ? setNumOfLines(numOfLines + 1)
+                    : setNumOfLines(NUM_OF_LINES);
+                }
+              }}
+              style={[style.showMore, showMore ? null : {color: 'red'}]}>
+              {showMore ? 'Show More' : 'Show Less'}{' '}
+              {showMore ? (
+                <Image source={require('../assets/images/vector.png')} />
+              ) : null}
+            </Text>
+          ) : null}
         </Card>
         <Card
           style={[
