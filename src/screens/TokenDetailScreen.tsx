@@ -73,6 +73,13 @@ const TokenDetailScreen: FC = (props: any) => {
       style={{
         flex: 1,
       }}>
+      <View style={{backgroundColor: 'rgba(255, 255, 255, 0.5)', padding: 20}}>
+        <TouchableRipple onPress={() => navigation.goBack()}>
+          <Text style={{textAlign: 'center', letterSpacing: 2, fontSize: 16}}>
+            Dismiss
+          </Text>
+        </TouchableRipple>
+      </View>
       <ScrollView style={appLayout.sv}>
         <Card style={style.card}>
           <View style={style.cardTopSection}>
