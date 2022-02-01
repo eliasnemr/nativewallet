@@ -45,7 +45,6 @@ export const RootNavigator = () => {
       <Drawer.Screen name="Address" component={ReceiveFundsScreen} />
       <Drawer.Screen name="Send" component={TokenTransferScreen} />
       <Drawer.Screen name="Token" component={CreateTokenScreen} />
-      <Drawer.Screen name="TokenDetailScreen" component={TokenDetailScreen} />
     </Drawer.Navigator>
   );
 };

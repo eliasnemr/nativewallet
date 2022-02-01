@@ -3,8 +3,10 @@ import {Image, Platform, StyleSheet} from 'react-native';
 import {List} from 'react-native-paper';
 import {colorPalette} from '../../themes/themes';
 import {BalanceTokenProps} from '../../types';
+import {useNavigation} from '@react-navigation/native';
 
 const BalanceToken: FC<BalanceTokenProps> = props => {
+  const navigation = useNavigation();
   //box-shadow: none|h-offset v-offset blur spread color |inset|initial|inherit;
   //box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   generateBoxShadowStyle(
@@ -19,6 +21,22 @@ const BalanceToken: FC<BalanceTokenProps> = props => {
 
   return (
     <List.Item
+      onPress={() => {
+        navigation.navigate(
+          'TokenDetails' as never,
+          {
+            name: props.t.token.name ? props.t.token.name : props.t.token,
+            icon: props.t.token.icon ? props.t.token.icon : '',
+            tokenid: props.t.tokenid,
+            description: props.t.token.description
+              ? props.t.token.description
+              : '',
+            amount: props.t.total,
+            confirmed: props.t.confirmed,
+            unconfirmed: props.t.unconfirmed,
+          } as never,
+        );
+      }}
       key={props.t.tokenid}
       title={props.t.token.name ? props.t.token.name : props.t.token}
       description={props.t.confirmed}
