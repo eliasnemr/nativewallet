@@ -31,6 +31,8 @@ const TokenDetailScreen: FC = (props: any) => {
   const [showMore, setShowMore] = useState(false);
   const [numOfLines, setNumOfLines] = useState(NUM_OF_LINES);
   const [totalLines, setTotalLines] = useState(0);
+
+  const [copying, setCopying] = useState(false);
   const onTextLayout = useCallback(
     e => {
       setTotalLines(e.nativeEvent.lines.length);
@@ -42,9 +44,10 @@ const TokenDetailScreen: FC = (props: any) => {
   const copyToClipboard = (data: string) => {
     try {
       // setCopyIcon('check-outline');
+      setCopying(true);
       Clipboard.setString(data);
       setTimeout(() => {
-        // setCopyIcon('clipboard');
+        setCopying(false);
       }, 1000);
     } catch (err) {
       setTimeout(() => {
@@ -160,13 +163,22 @@ const TokenDetailScreen: FC = (props: any) => {
                 titleEllipsizeMode="middle"
                 style={[style.detail, {flex: 1, marginRight: 0}]}
                 title={tokenid}></List.Item>
-              <View style={[style.detailCopyBtn]}>
+              <View
+                style={[
+                  style.detailCopyBtn,
+                  copying ? {backgroundColor: '#40A960'} : null,
+                ]}>
                 <TouchableRipple
                   onPress={() => {
-                    console.log('yo');
                     copyToClipboard(tokenid);
                   }}>
-                  <Image source={require('../assets/images/clipboard.png')} />
+                  <Image
+                    source={
+                      !copying
+                        ? require('../assets/images/clipboard.png')
+                        : null
+                    }
+                  />
                 </TouchableRipple>
               </View>
             </View>
