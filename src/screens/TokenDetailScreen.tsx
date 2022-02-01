@@ -1,6 +1,7 @@
 import {useNavigation} from '@react-navigation/native';
 import React, {FC, useState, useCallback} from 'react';
 import {
+  Alert,
   Image,
   ImageBackground,
   StyleSheet,
@@ -15,9 +16,12 @@ import {
   Paragraph,
   Title,
   Text,
+  List,
+  TouchableRipple,
 } from 'react-native-paper';
-import {Icon} from 'react-native-vector-icons/Icon';
 import {appLayout} from '../styles';
+
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const NUM_OF_LINES = 5;
 
@@ -33,8 +37,31 @@ const TokenDetailScreen: FC = (props: any) => {
     [numOfLines],
   );
 
-  const {name, icon, description, amount, confirmed, unconfirmed, tokenid} =
-    props.route.params;
+  const copyToClipboard = (data: string) => {
+    try {
+      // setCopyIcon('check-outline');
+      Clipboard.setString(data);
+      setTimeout(() => {
+        // setCopyIcon('clipboard');
+      }, 1000);
+    } catch (err) {
+      setTimeout(() => {
+        // setCopyIcon('clipboard');
+      }, 1000);
+      Alert.alert(err);
+    }
+  };
+
+  const {
+    name,
+    icon,
+    description,
+    amount,
+    confirmed,
+    unconfirmed,
+    tokenid,
+    mempool,
+  } = props.route.params;
   return (
     <ImageBackground
       source={
@@ -97,6 +124,63 @@ const TokenDetailScreen: FC = (props: any) => {
             ) : null}
           </Text>
         </Card>
+        <Card
+          style={[
+            style.card,
+            {
+              marginTop: 20,
+              marginBottom: 20,
+              justifyContent: 'space-evenly',
+              minHeight: 280,
+            },
+          ]}>
+          <View style={{paddingTop: 10}}>
+            <Text style={style.detailLabel}>Name</Text>
+            <List.Item style={style.detail} title={name}></List.Item>
+          </View>
+          <View style={{paddingTop: 10}}>
+            <Text style={style.detailLabel}>Total Supply</Text>
+            <List.Item style={style.detail} title={amount}></List.Item>
+          </View>
+          <View style={{paddingTop: 10}}>
+            <Text style={style.detailLabel}>Token ID</Text>
+            <View style={{flexDirection: 'row'}}>
+              <List.Item
+                titleEllipsizeMode="middle"
+                style={[style.detail, {flex: 1, marginRight: 0}]}
+                title={tokenid}></List.Item>
+              <View style={[style.detailCopyBtn]}>
+                <TouchableRipple
+                  onPress={() => {
+                    console.log('yo');
+                    copyToClipboard(tokenid);
+                  }}>
+                  <Image source={require('../assets/images/clipboard.png')} />
+                </TouchableRipple>
+              </View>
+            </View>
+          </View>
+        </Card>
+
+        <Card
+          style={[
+            style.card,
+            {
+              marginTop: 20,
+              marginBottom: 20,
+              justifyContent: 'space-evenly',
+              minHeight: 200,
+            },
+          ]}>
+          <View style={{paddingTop: 10}}>
+            <Text style={style.detailLabel}>Confirmed</Text>
+            <List.Item style={style.detail} title={confirmed}></List.Item>
+          </View>
+          <View style={{paddingTop: 10}}>
+            <Text style={style.detailLabel}>Unconfirmed</Text>
+            <List.Item style={style.detail} title={unconfirmed}></List.Item>
+          </View>
+        </Card>
       </ScrollView>
     </ImageBackground>
   );
@@ -105,6 +189,29 @@ const TokenDetailScreen: FC = (props: any) => {
 export default TokenDetailScreen;
 
 const style = StyleSheet.create({
+  detailCopyBtn: {
+    minWidth: 44,
+    minHeight: 50,
+    marginRight: 15,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
+    backgroundColor: '#317AFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  detailLabel: {
+    fontWeight: '700',
+    paddingLeft: 30,
+    paddingBottom: 6,
+  },
+  detail: {
+    fontWeight: '400',
+    letterSpacing: 2,
+    marginLeft: 15,
+    marginRight: 15,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+  },
   showMore: {
     flex: 1,
     textAlign: 'center',
