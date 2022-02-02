@@ -9,7 +9,7 @@ const BalanceTokenList: FC<BalanceTokenListProps> = props => {
 
   return (
     <List.Section>
-      {allBalance ? (
+      {allBalance && allBalance.length > 0 ? (
         allBalance
           .filter((token: MinimaToken) =>
             searchQuery.length > 0

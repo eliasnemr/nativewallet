@@ -4,6 +4,7 @@ import {callBalance} from '../../api/rpc-commands';
 import {MinimaToken} from '../../types';
 import BalanceSearchBar from '../atoms/BalanceSearchBar';
 import BalanceTokenList from '../molecules/BalanceTokenList';
+import ServiceUnavailable from './ServiceUnavailable';
 
 const Balance: FC = () => {
   const [balance, setBalance] = useState<MinimaToken[]>([]);
@@ -12,10 +13,24 @@ const Balance: FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
+      let didCallBalanceOnce = false;
+      if (!didCallBalanceOnce) {
+        // then call balance once
+        callBalance()
+          .then(data => {
+            // console.log(data);
+            setBalance(data.response);
+            // console.log('Calld once.');
+            didCallBalanceOnce = true;
+          })
+          .catch(err => {
+            console.log(`ERROR: ${err}`);
+          });
+      }
       setInterval(() => {
         callBalance()
           .then(data => {
-            console.log(data);
+            // console.log(data);
             setBalance(data.response);
           })
           .catch(err => {
@@ -30,14 +45,20 @@ const Balance: FC = () => {
 
   return (
     <>
-      <BalanceSearchBar
-        onChangeSearch={onChangeSearch}
-        placeholder="Search for a token"
-        searchQuery={searchQuery}
-        mb={30}></BalanceSearchBar>
-      <BalanceTokenList
-        filter={searchQuery}
-        balance={balance}></BalanceTokenList>
+      {balance ? (
+        <>
+          <BalanceSearchBar
+            onChangeSearch={onChangeSearch}
+            placeholder="Search for a token"
+            searchQuery={searchQuery}
+            mb={30}></BalanceSearchBar>
+          <BalanceTokenList
+            filter={searchQuery}
+            balance={balance}></BalanceTokenList>
+        </>
+      ) : (
+        <ServiceUnavailable />
+      )}
     </>
   );
 };
