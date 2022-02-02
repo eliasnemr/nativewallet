@@ -76,6 +76,7 @@ export interface MinimaToken {
   tokenid: string;
   confirmed: string;
   unconfirmed: string;
+  sendable: string;
   total: string;
 }
 interface CustomTokenJson {

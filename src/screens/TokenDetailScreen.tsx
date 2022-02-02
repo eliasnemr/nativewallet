@@ -65,7 +65,7 @@ const TokenDetailScreen: FC = (props: any) => {
     confirmed,
     unconfirmed,
     tokenid,
-    mempool,
+    sendable,
   } = props.route.params;
   return (
     <ImageBackground
@@ -202,6 +202,10 @@ const TokenDetailScreen: FC = (props: any) => {
           <View style={{paddingTop: 10}}>
             <Text style={style.detailLabel}>Unconfirmed</Text>
             <List.Item style={style.detail} title={unconfirmed}></List.Item>
+          </View>
+          <View style={{paddingTop: 10}}>
+            <Text style={style.detailLabel}>Sendable</Text>
+            <List.Item style={style.detail} title={sendable}></List.Item>
           </View>
         </Card>
       </ScrollView>

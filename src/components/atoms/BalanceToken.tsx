@@ -34,6 +34,7 @@ const BalanceToken: FC<BalanceTokenProps> = props => {
             amount: props.t.total,
             confirmed: props.t.confirmed,
             unconfirmed: props.t.unconfirmed,
+            sendable: props.t.sendable,
           } as never,
         );
       }}
