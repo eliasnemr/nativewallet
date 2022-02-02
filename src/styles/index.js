@@ -164,9 +164,6 @@ export const formStyle = StyleSheet.create({
     width: '100%',
   },
   formInput: {
-    flex: 1,
-    alignItems: 'flex-start',
-    justifyContent: 'center',
     paddingLeft: 15,
     paddingRight: 15,
     marginBottom: 16,
