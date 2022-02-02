@@ -31,17 +31,30 @@ const TokenTransferScreen: FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      callBalance()
-        .then(data => {
-          setBalance(data.response);
-          // setBalance([]);
-        })
-        .catch(err => {
-          console.log(`ERROR: ${err}`);
-        });
-      return () => {
-        // setBalance([]);
-      };
+      let didCallBalanceOnce = false;
+      if (!didCallBalanceOnce) {
+        // then call balance once
+        callBalance()
+          .then(data => {
+            // console.log(data);
+            setBalance(data.response);
+            // console.log('Calld once.');
+            didCallBalanceOnce = true;
+          })
+          .catch(err => {
+            console.log(`ERROR: ${err}`);
+          });
+      }
+      setInterval(() => {
+        callBalance()
+          .then(data => {
+            // console.log(data);
+            setBalance(data.response);
+          })
+          .catch(err => {
+            console.log(`ERROR: ${err}`);
+          });
+      }, 20000);
     }, []),
   );
 
