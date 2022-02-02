@@ -12,30 +12,39 @@ const BottomPartMenuSection: FC = () => {
 
   useFocusEffect(
     React.useCallback(() => {
-      let didCallBalanceOnce = false;
-      if (!didCallBalanceOnce) {
-        // then call balance once
-        callBalance()
-          .then(data => {
-            data.response.forEach((el: Balance) =>
-              el.tokenid === '0x00' ? setBalance(el) : null,
-            );
-          })
-          .catch(err => {
-            console.log(`ERROR: ${err}`);
-          });
-      }
-      setInterval(() => {
-        callBalance()
-          .then(data => {
-            data.response.forEach((el: Balance) =>
-              el.tokenid === '0x00' ? setBalance(el) : null,
-            );
-          })
-          .catch(err => {
-            console.log(`ERROR: ${err}`);
-          });
-      }, 20000);
+      callBalance()
+        .then(data => {
+          data.response.forEach((el: Balance) =>
+            el.tokenid === '0x00' ? setBalance(el) : null,
+          );
+        })
+        .catch(err => {
+          console.log(`ERROR: ${err}`);
+        });
+      // let didCallBalanceOnce = false;
+      // if (!didCallBalanceOnce) {
+      //   // then call balance once
+      //   callBalance()
+      //     .then(data => {
+      //       data.response.forEach((el: Balance) =>
+      //         el.tokenid === '0x00' ? setBalance(el) : null,
+      //       );
+      //     })
+      //     .catch(err => {
+      //       console.log(`ERROR: ${err}`);
+      //     });
+      // }
+      // setInterval(() => {
+      //   callBalance()
+      //     .then(data => {
+      //       data.response.forEach((el: Balance) =>
+      //         el.tokenid === '0x00' ? setBalance(el) : null,
+      //       );
+      //     })
+      //     .catch(err => {
+      //       console.log(`ERROR: ${err}`);
+      //     });
+      // }, 20000);
       return () => {};
     }, []),
   );
