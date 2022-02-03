@@ -188,6 +188,7 @@ const style = StyleSheet.create({
     borderRadius: 8,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
+    marginTop: 30,
   },
   li: {
     paddingLeft: 15,

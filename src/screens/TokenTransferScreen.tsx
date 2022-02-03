@@ -114,7 +114,7 @@ const TokenTransferScreen: FC = () => {
                 <Text style={formStyle.error}>{errors.tokenid}</Text>
               ) : null}
               <Picker
-                style={formStyle.formInput}
+                style={[formStyle.formInput, {marginTop: 30}]}
                 selectedValue={token}
                 onValueChange={itemValue => {
                   console.log(itemValue);

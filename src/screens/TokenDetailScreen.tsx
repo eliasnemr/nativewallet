@@ -161,7 +161,15 @@ const TokenDetailScreen: FC = (props: any) => {
             <View style={{flexDirection: 'row'}}>
               <List.Item
                 titleEllipsizeMode="middle"
-                style={[style.detail, {flex: 1, marginRight: 0}]}
+                style={[
+                  style.detail,
+                  {
+                    flex: 1,
+                    marginRight: 0,
+                    borderTopRightRadius: 0,
+                    borderBottomRightRadius: 0,
+                  },
+                ]}
                 title={tokenid}></List.Item>
               <View
                 style={[
@@ -192,7 +200,7 @@ const TokenDetailScreen: FC = (props: any) => {
               marginTop: 20,
               marginBottom: 20,
               justifyContent: 'space-evenly',
-              minHeight: 200,
+              minHeight: 280,
             },
           ]}>
           <View style={{paddingTop: 10}}>
@@ -275,6 +283,7 @@ const style = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     elevation: 0,
     minHeight: 351,
+    marginTop: 30,
   },
   cardTitle: {
     marginBottom: 20,

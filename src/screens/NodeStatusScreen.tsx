@@ -5,7 +5,7 @@ import {List} from 'react-native-paper';
 import {callStatus} from '../api/rpc-commands';
 import {StatusRow} from '../components/statusRow';
 import {Status} from '../types';
-import {bStyles} from '../styles';
+import {appLayout, bStyles} from '../styles';
 import {ImageBackground, useColorScheme} from 'react-native';
 import ServiceUnavailable from '../components/organisms/ServiceUnavailable';
 
@@ -48,7 +48,7 @@ const NodeStatusScreen: FC = () => {
         flex: 1,
       }}>
       {status && status.chain.block > 0 ? (
-        <ScrollView style={bStyles.view}>
+        <ScrollView style={appLayout.sv}>
           <List.Section
             title={status?.version ? 'Minima v' + status?.version : 'Offline'}>
             <StatusRow data={status?.devices} property={'Devices'}></StatusRow>

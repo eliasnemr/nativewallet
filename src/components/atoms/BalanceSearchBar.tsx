@@ -32,6 +32,7 @@ export default BalanceSearchBar;
 
 const style = StyleSheet.create({
   sb: {
+    marginTop: 30,
     borderRadius: 8,
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     inputStyle: {

@@ -5,12 +5,12 @@ import {useTheme} from '@react-navigation/native';
 /** Main app layout */
 export const appLayout = StyleSheet.create({
   sv: {
-    paddingTop: 30,
     paddingLeft: 23,
     paddingRight: 23,
+    paddingBottom: 0,
   },
   svna: {
-    paddingTop: 30,
+    marginTop: 30,
     paddingLeft: 23,
     paddingRight: 23,
     flex: 1,

@@ -92,7 +92,7 @@ const CreateTokenScreen: FC = () => {
               <Text style={formStyle.error}>{errors.name}</Text>
             ) : null}
             <TextInput
-              style={formStyle.formInput}
+              style={[formStyle.formInput, {marginTop: 30}]}
               placeholder="Name"
               onChangeText={handleChange('name')}
               onBlur={handleBlur('name')}
