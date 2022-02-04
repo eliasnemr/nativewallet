@@ -96,7 +96,7 @@ const TokenDetailScreen: FC = (props: any) => {
                   ? require('../assets/images/minimaLogoSquare200x200.png')
                   : icon && icon.length > 0
                   ? {uri: icon}
-                  : {uri: `https://robohash.org/0x00`}
+                  : {uri: `https://robohash.org/${tokenid}`}
               }></Avatar.Image>
 
             <Title style={style.title}>{name}</Title>

@@ -34,7 +34,7 @@ export const tokencreate = (data: any) => {
 
 ///// private functions //////
 
-const MAX_RETRIES = 2;
+const MAX_RETRIES = 3;
 
 const callTokenSingle = (data: any) => () => {
   const url = `${RPCHOST}${TOKENCREATE}+name:${JSON.stringify(
