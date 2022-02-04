@@ -11,6 +11,7 @@ import TokenTransferScreen from '../screens/TokenTransferScreen';
 import ReceiveFundsScreen from '../screens/ReceiveFundsScreen';
 import NodeStatusScreen from '../screens/NodeStatusScreen';
 import CreateTokenScreen from '../screens/CreateTokenScreen';
+import {useColorScheme} from 'react-native';
 const Drawer = createDrawerNavigator();
 
 const DrawerContent: FC<DrawerContentComponentProps> = props => {
@@ -23,9 +24,12 @@ const DrawerContent: FC<DrawerContentComponentProps> = props => {
 };
 
 export const RootNavigator = () => {
+  const scheme = useColorScheme();
   return (
     <Drawer.Navigator
-      screenOptions={{headerTintColor: '#FFFFFF'}}
+      screenOptions={{
+        headerTintColor: scheme === 'dark' ? '#FFFFFF' : '#000000',
+      }}
       drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen name="Balance" component={BalanceScreen} />
       <Drawer.Screen name="Status" component={NodeStatusScreen} />
