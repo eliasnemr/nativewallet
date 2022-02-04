@@ -8,6 +8,7 @@ export const appLayout = StyleSheet.create({
     paddingLeft: 23,
     paddingRight: 23,
     paddingBottom: 0,
+    paddingTop: 0,
   },
   svna: {
     marginTop: 30,
@@ -168,7 +169,6 @@ export const formStyle = StyleSheet.create({
     paddingRight: 15,
     marginBottom: 16,
     minHeight: 60,
-
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
   },
   formBtn: {

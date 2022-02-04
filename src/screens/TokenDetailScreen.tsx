@@ -93,7 +93,7 @@ const TokenDetailScreen: FC = (props: any) => {
               style={style.imageContainer}
               source={
                 tokenid === '0x00'
-                  ? require('../assets/images/minimaLogoSquare.png')
+                  ? require('../assets/images/minimaLogoSquare200x200.png')
                   : icon && icon.length > 0
                   ? {uri: icon}
                   : {uri: `https://robohash.org/0x00`}
@@ -265,7 +265,11 @@ const style = StyleSheet.create({
     marginRight: 15,
     flex: 4,
   },
-  imageContainer: {marginTop: 16, marginBottom: 16},
+  imageContainer: {
+    marginTop: 16,
+    marginBottom: 16,
+    backgroundColor: 'transparent',
+  },
   title: {fontSize: 16, fontWeight: '700'},
   description: {
     fontSize: 16,
