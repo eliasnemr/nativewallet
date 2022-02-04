@@ -1,5 +1,6 @@
 import {useFocusEffect} from '@react-navigation/native';
 import React, {FC, useState} from 'react';
+import {ActivityIndicator} from 'react-native-paper';
 import {callBalance} from '../../api/rpc-commands';
 import {MinimaToken} from '../../types';
 import BalanceSearchBar from '../atoms/BalanceSearchBar';
@@ -10,43 +11,21 @@ const Balance: FC = () => {
   const [balance, setBalance] = useState<MinimaToken[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const onChangeSearch = (query: string) => setSearchQuery(query);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [failed, setFailed] = useState<boolean>(false);
 
   useFocusEffect(
     React.useCallback(() => {
       callBalance()
         .then(data => {
-          // console.log(data);
           setBalance(data.response);
-          // console.log('Calld once.');
-          // didCallBalanceOnce = true;
+          setLoading(false);
         })
         .catch(err => {
           console.log(`ERROR: ${err}`);
+          setLoading(false);
+          setFailed(true);
         });
-      // let didCallBalanceOnce = false;
-      // if (!didCallBalanceOnce) {
-      //   // then call balance once
-      //   callBalance()
-      //     .then(data => {
-      //       // console.log(data);
-      //       setBalance(data.response);
-      //       // console.log('Calld once.');
-      //       didCallBalanceOnce = true;
-      //     })
-      //     .catch(err => {
-      //       console.log(`ERROR: ${err}`);
-      //     });
-      // }
-      // setInterval(() => {
-      //   callBalance()
-      //     .then(data => {
-      //       // console.log(data);
-      //       setBalance(data.response);
-      //     })
-      //     .catch(err => {
-      //       console.log(`ERROR: ${err}`);
-      //     });
-      // }, 20000);
       return () => {
         // setBalance([]);
       };
@@ -63,9 +42,17 @@ const Balance: FC = () => {
             searchQuery={searchQuery}
             mb={30}></BalanceSearchBar>
           <BalanceTokenList
+            loading={loading}
+            failed={failed}
             filter={searchQuery}
             balance={balance}></BalanceTokenList>
         </>
+      ) : !loading && failed ? (
+        <ActivityIndicator
+          animating={true}
+          color="#317AFF"
+          style={{margin: 20}}
+        />
       ) : (
         <ServiceUnavailable />
       )}

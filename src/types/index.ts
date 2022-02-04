@@ -146,6 +146,8 @@ export interface BalanceTokenProps {
 export interface BalanceTokenListProps {
   readonly balance: MinimaToken[];
   readonly filter: string;
+  readonly loading: boolean;
+  readonly failed: boolean;
 }
 export interface BalanceSearchBarProps {
   readonly searchQuery: string;

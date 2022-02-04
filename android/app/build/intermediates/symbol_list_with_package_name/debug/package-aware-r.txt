@@ -1394,6 +1394,7 @@ drawable src_assets_images_dm
 drawable src_assets_images_lm
 drawable src_assets_images_minimalandscape
 drawable src_assets_images_minimalogosquare
+drawable src_assets_images_minimalogosquare200x200
 drawable src_assets_images_vector
 drawable test_custom_background
 drawable tooltip_frame_dark

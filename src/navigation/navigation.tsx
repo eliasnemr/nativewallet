@@ -24,7 +24,9 @@ const DrawerContent: FC<DrawerContentComponentProps> = props => {
 
 export const RootNavigator = () => {
   return (
-    <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+    <Drawer.Navigator
+      screenOptions={{headerTintColor: '#FFFFFF'}}
+      drawerContent={props => <DrawerContent {...props} />}>
       <Drawer.Screen name="Balance" component={BalanceScreen} />
       <Drawer.Screen name="Status" component={NodeStatusScreen} />
       <Drawer.Screen name="Address" component={ReceiveFundsScreen} />

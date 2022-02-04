@@ -6,7 +6,14 @@ import {
   useColorScheme,
   View,
 } from 'react-native';
-import {Button, Caption, Card, List, Text} from 'react-native-paper';
+import {
+  ActivityIndicator,
+  Button,
+  Caption,
+  Card,
+  List,
+  Text,
+} from 'react-native-paper';
 import Clipboard from '@react-native-clipboard/clipboard';
 import {callAddress} from '../api/rpc-commands';
 import {useFocusEffect} from '@react-navigation/native';
@@ -32,6 +39,8 @@ const ReceiveFundsScreen = () => {
   const [address, setAddress] = useState('');
   const [copyText, setCopyText] = useState('Copy');
   const [genText, setGenText] = useState('Generate');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [failed, setFailed] = useState<boolean>(false);
 
   const generateAddress = () => {
     setGenText('Generating...');
@@ -41,11 +50,14 @@ const ReceiveFundsScreen = () => {
           setAddress(data.response.address);
           storeAddress(data.response.address);
           setGenText('Generate');
+          setLoading(false);
         }
       })
       .catch(err => {
         console.log(err);
         setGenText('Generate');
+        setLoading(false);
+        setFailed(true);
       });
   };
 
@@ -166,8 +178,14 @@ const ReceiveFundsScreen = () => {
             </Button>
           </View>
         </View>
-      ) : (
+      ) : !loading && failed ? (
         <ServiceUnavailable />
+      ) : (
+        <ActivityIndicator
+          animating={true}
+          color="#317AFF"
+          style={{margin: 20}}
+        />
       )}
     </ImageBackground>
   );

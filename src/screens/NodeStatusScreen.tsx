@@ -5,12 +5,15 @@ import {List} from 'react-native-paper';
 import {callStatus} from '../api/rpc-commands';
 import {StatusRow} from '../components/statusRow';
 import {Status} from '../types';
-import {appLayout, bStyles} from '../styles';
+import {appLayout} from '../styles';
 import {ImageBackground, useColorScheme} from 'react-native';
+import {ActivityIndicator} from 'react-native-paper';
 import ServiceUnavailable from '../components/organisms/ServiceUnavailable';
 
 const NodeStatusScreen: FC = () => {
   const [status, setStatus] = useState<Status | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [failed, setFailed] = useState<boolean>(false);
   const scheme = useColorScheme();
 
   // const [expanded, setExpanded] = React.useState(true);
@@ -22,12 +25,14 @@ const NodeStatusScreen: FC = () => {
       callStatus()
         .then(data => {
           if (data && data.response) {
-            console.log(data.response);
             setStatus(data.response);
+            setLoading(false);
           }
         })
         .catch(err => {
           console.log(err);
+          setLoading(false);
+          setFailed(true);
         });
 
       return () => {
@@ -313,8 +318,14 @@ const NodeStatusScreen: FC = () => {
             </List.Accordion>
           </List.Section>
         </ScrollView>
-      ) : (
+      ) : !loading && failed ? (
         <ServiceUnavailable />
+      ) : (
+        <ActivityIndicator
+          animating={true}
+          color="#317AFF"
+          style={{margin: 20}}
+        />
       )}
     </ImageBackground>
   );

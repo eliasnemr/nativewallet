@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 import {appLayout, formStyle} from '../styles';
 import {Formik} from 'formik';
 import {Alert, ImageBackground, View} from 'react-native';
-import {TextInput, Button, Text} from 'react-native-paper';
+import {TextInput, Button, Text, ActivityIndicator} from 'react-native-paper';
 import * as Yup from 'yup';
 import {MinimaToken} from '../types';
 import {useFocusEffect} from '@react-navigation/native';
@@ -28,18 +28,20 @@ const TokenTransferScreen: FC = () => {
   const [balance, setBalance] = useState<MinimaToken[]>([]);
   const [token, setToken] = useState<string>('');
   const [btnText, setBtnText] = useState('Send');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [failed, setFailed] = useState<boolean>(false);
 
   useFocusEffect(
     React.useCallback(() => {
       callBalance()
         .then(data => {
-          // console.log(data);
           setBalance(data.response);
-          // console.log('Calld once.');
-          // didCallBalanceOnce = true;
+          setLoading(false);
         })
         .catch(err => {
           console.log(`ERROR: ${err}`);
+          setLoading(false);
+          setFailed(true);
         });
       // let didCallBalanceOnce = false;
       // if (!didCallBalanceOnce) {
@@ -162,8 +164,14 @@ const TokenTransferScreen: FC = () => {
                 {btnText}
               </Button>
             </View>
-          ) : (
+          ) : !loading && failed ? (
             <ServiceUnavailable />
+          ) : (
+            <ActivityIndicator
+              animating={true}
+              color="#317AFF"
+              style={{margin: 20}}
+            />
           )}
         </ImageBackground>
       )}

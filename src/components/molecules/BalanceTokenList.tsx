@@ -1,11 +1,14 @@
 import React, {FC} from 'react';
 import {BalanceTokenListProps, MinimaToken} from '../../types';
 import BalanceToken from '../atoms/BalanceToken';
-import {List, Text} from 'react-native-paper';
+import {ActivityIndicator, List, Text} from 'react-native-paper';
+import ServiceUnavailable from '../organisms/ServiceUnavailable';
 
 const BalanceTokenList: FC<BalanceTokenListProps> = props => {
   const allBalance = props.balance;
   const searchQuery = props.filter;
+  const loading = props.loading;
+  const failed = props.failed;
 
   return (
     <List.Section>
@@ -25,11 +28,14 @@ const BalanceTokenList: FC<BalanceTokenListProps> = props => {
           .map((tok: MinimaToken) => (
             <BalanceToken t={tok} key={tok.tokenid}></BalanceToken>
           ))
+      ) : !loading && failed ? (
+        <ServiceUnavailable />
       ) : (
-        <Text>
-          No balance available, please check the status of your Minima Node or
-          enable your rpc by typing `rpc enable:true` in the apk terminal.
-        </Text>
+        <ActivityIndicator
+          animating={true}
+          color="#317AFF"
+          style={{margin: 20}}
+        />
       )}
     </List.Section>
   );
