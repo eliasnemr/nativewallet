@@ -8,6 +8,7 @@ export const appLayout = StyleSheet.create({
     paddingLeft: 23,
     paddingRight: 23,
     paddingBottom: 0,
+    paddingTop: 0,
   },
   svna: {
     marginTop: 30,
